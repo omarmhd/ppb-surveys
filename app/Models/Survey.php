@@ -18,4 +18,9 @@ class Survey extends Model
 
         return  $this->belongsToMany(Section::class,'section_surveys');
     }
+    public function getCreatedAtAttribute($value){
+
+        return date("Y-m-d",strtotime($value));
+
+    }
 }

@@ -22,6 +22,9 @@ class CreateCurrantSurveysTable extends Migration
             $table->enum('status',['private','published'])->default('private');
             $table->enum("is_open",['0','1'])->default(0);
             $table->enum("is_evaluated",['0','1'])->default(0);
+            $table->enum("is_accepted",['0','1'])->default(0);
+            $table->integer("score")->default(0);
+//            $table->enum("is_accepted",['0','1'])->default(0);
             $table->text("notes")->nullable();
             $table->softDeletes();
 

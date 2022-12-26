@@ -6,6 +6,7 @@ use App\Models\ActivatedSurvey;
 use App\Models\CurrantSurvey;
 use App\Models\Employee;
 use App\Models\Point;
+use App\Models\project\utilization\Order;
 use App\Models\Result;
 use App\Models\Section;
 use App\Models\SectionSurvey;
@@ -20,12 +21,26 @@ use Yajra\DataTables\Facades\DataTables;
 class ActivatedSurveyController extends Controller
 {
 
-    public  function index(Request$request){
+    public  function index(Request $request){
 
+
+        $evaluators=User::where("role",'evaluator')->get();
+        $employees=User::where("role",'employee')->get();
         if ($request->ajax()) {
+
+
             $data = CurrantSurvey::latest()->get();
+
+
+            if (($request->date_from && $request->date_to) ||$request->evaluator_id || $request->employee_id ) {
+
+                $data = CurrantSurvey::whereBetween('created_at',[$request->date_from,$request->date_to])->get();
+
+
+            }
             return DataTables::of($data)
                 ->addIndexColumn()
+
                 ->addColumn('status', function ($data) {
                     if($data->status=="private"){
                         $actionBtn = '<i class="fa fa-eye"></i>';
@@ -52,7 +67,9 @@ class ActivatedSurveyController extends Controller
                     }
                     return $actionBtn;
                 })->addColumn('action', function ($data) {
-                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn btn-primary "><i class="fa fa-pen"></i></a> <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-danger "><i class="fa fa-trash"></i></a>';
+                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn btn-primary btn=sm"><i class="fa fa-poll"></i>  تقيم</a>
+  <a href="'.route('activated-surveys.edit',$data).'" data-id="' . $data->id . '"   class="btn btn-info  btn=sm"><i class="fa fa-pen"></i>تعديل</a>
+ <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-danger btn=sm"><i class="fa fa-trash"></i>حذف</a>';
                     return $actionBtn;
                 })
                 ->addColumn('employee_id', function ($data) {
@@ -70,12 +87,18 @@ class ActivatedSurveyController extends Controller
                 return $data->evaluator->full_name;
 
                 })
+                ->addColumn('score', function ($data) {
+                    $sum_result=$data->results->sum("score");
+                    $prerc=($sum_result/100)*100;
+
+                    return $prerc;
+                })
 
                 ->rawColumns(['action','status','is_open','is_evaluated','employee_id','survey_id'])
                 ->make(true);
         }
 
-        return  view('surveys.activated-surveys.index');
+        return  view('surveys.activated-surveys.index',compact('evaluators','employees'));
     }
 
     public function create(){
@@ -97,7 +120,11 @@ class ActivatedSurveyController extends Controller
 //            ->get();
 
 
-        $survey=CurrantSurvey::find($id);
+
+        $survey=CurrantSurvey::findorfail($id);
+        if ($survey->is_evaluated==1){
+            return  redirect()->back()->with('error','نأسف! لا يمكن التقيم مرة أخرى ');
+        }
         $survey_id=$survey->survey_id;
         $sections = SectionSurvey::with(['results' => function($q) use ($id) {
             $q->where('currant_survey_id',$id);
@@ -115,16 +142,6 @@ class ActivatedSurveyController extends Controller
 
 //        $sectionSurvey=SectionSurvey::where("survey_id",$currantSurvey->survey_id)->get();
 
-
-
-
-
-
-
-
-
-
-
         return view('surveys.activated-surveys.show',compact('sections','survey','points'));
 
 
@@ -133,7 +150,20 @@ class ActivatedSurveyController extends Controller
 
     }
     public function  store(Request $request){
+        $validator = Validator::make($request->all(), [
+            'survey_id'=>"required",
+            "evaluators"=>"required|exists:users,id",
+            "employees"=>"required|exists:users,id",
+            "evaluators.*"=>"required|exists:users,id|numeric",
+            "employees.*"=>"required|exists:users,id",
+            'status'=>"required",
+            'is_open'=>"required"
 
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
+        }
 
         foreach($request->evaluators as $key=>$evaluator){
 
@@ -163,7 +193,7 @@ class ActivatedSurveyController extends Controller
                         'section_survey_id'=>$question->section_survey_id,
                         'section_title'=>'',
                         'question_title'=>$question->name,
-                        'score'=>"2"
+                        'score'=>"0"
 
                     ]);
 
@@ -177,6 +207,7 @@ class ActivatedSurveyController extends Controller
 
 
 
+        return response()->json(['success' => true, 'message' => "تم  تفعيل  النموذج"]);
 
 
 
@@ -190,58 +221,94 @@ class ActivatedSurveyController extends Controller
 
 
     }
+
+    public  function edit(CurrantSurvey $activated_survey){
+
+        if ($activated_survey->is_evaluated=="1"){
+            return response()->json(['success' => false, 'message' => " خطأ! لايمكن التعديل على  بيانات الموظف الذي تم تقيمه "]);
+
+        }
+
+        $surveys=Survey::all();
+        $users=User::all();
+        return  view('surveys.activated-surveys.edit',compact('activated_survey','users','surveys'));
+
+
+
+    }
+
+
+
+
     public function  update(Request $request,CurrantSurvey $activated_survey){
 
         $validator = Validator::make($request->all(), [
-            'results[].*.'=>'required',
-            'notes'=>"required",
-
-        ],[
-            'results.*.required'=>'أجب على كافة المعاير'
+            'employee_id'=>"required",
+            'evaluator_id'=>"required",
+            'status'=>"required",
+            'is_open'=>'required'
         ]);
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
+        $activated_survey->update($request->only(['employee_id','evaluator_id','status','is_open']));
 
 
+
+
+        return response()->json(['success' => true, 'message' => "تم حفظ التعديلات"]);
+
+
+    }
+
+    public function  evaluation(Request $request,CurrantSurvey $activated_survey){
+
+
+        $cont_results=count( $request->results??[""]);
+
+        if ($activated_survey->is_evaluated=="1"){
+            return response()->json(['success' => "error", 'message' => "نأسف!تم التقبم مسبقا لا يمكن التقيم مرة أخرى"]);
+
+        }
+        if ($cont_results!==$activated_survey->results->count() || $cont_results==0){
+            return response()->json(['success' => "error", 'message' => "نأسف! التقيم غير مكتمل"]);
+
+        }
+
+        $total_score=0;
         foreach ($request->results as $key => $value) {
 
             Result::where('id',$key)->update(['score'=>$value]);
-
+            $total_score=$total_score+$value;
         };
 
-        $activated_survey->update(['is_evaluated'=>"1",'notes'=>$request->notes]);
+        $activated_survey->update(['is_evaluated'=>"1",'notes'=>$request->notes,'score'=>$total_score]);
 
 
 
         return response()->json(['success' => true, 'message' => "تم حفظ التقيم"]);
 
 
+    }
 
 
 
 
+    public function updateAccepted($id){
 
 
+        $ff=CurrantSurvey::where(["id"=>$id,"employee_id"=>2])->update(["is_accepted"=>0]);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return response()->json(['success' => true]);
 
     }
-    public function  destroy(ActivatedSurvey $activatedSurvey){
-        $activatedSurvey->delete();
+
+
+
+
+    public function  destroy(CurrantSurvey $activated_survey){
+        $activated_survey->delete();
         return response()->json(['status' => 'success']);
     }
 }

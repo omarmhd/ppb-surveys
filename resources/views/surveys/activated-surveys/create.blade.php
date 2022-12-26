@@ -1,5 +1,5 @@
 @extends('layouts.app_admin')
-@section('title','الإستبيانات')
+@section('title','تفعيل نموذج ')
 @section('toolbar.title','لوحة التحكم')
 @section('breadcrumb')
     <!--begin::Item-->
@@ -23,7 +23,7 @@
                 <!--end::Title-->
                 <!--begin::Description-->
                 <div class="text-gray-400 fw-bold fs-5">
-                    <a href="{{route('activated-surveys.index')}}" class="fw-bolder link-primary">جميع المستخدمين</a>.
+{{--                    <a href="{{route('activated-surveys.index')}}" class="fw-bolder link-primary">جميع المستخدمين</a>.--}}
                 </div>
                 <!--end::Description-->
             </div>
@@ -74,10 +74,10 @@
                                         <div class="col-md-4">
                                             {{--                                    <label>السؤال:</label>--}}
 
-                                            <select class="form-control select2 select2-hidden-accessible  form-control-solid"  id="select-eva" name="evaluators[]" multiple="" data-select2-id="kt_select2_4" tabindex="-1" aria-hidden="true" direction="rtl">
+                                            <select class="form-control select2 select2-hidden-accessible  form-control-solid"  id="select-eva" name="evaluators[]" multiple="" data-select2-id="select-eva" tabindex="-1" aria-hidden="true" direction="rtl">
 
                                                 @foreach($users as $user)
-                                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                                    <option value="{{$user->id}}">{{$user->full_name}}</option>
                                                 @endforeach
                                             </select>                                            <div class="d-md-none mb-2"></div>
                                         </div>
@@ -87,7 +87,7 @@
                                             <select class="form-control  select2 select2-hidden-accessible  form-control-solid"  id="select-emp" name="employees[]" multiple="" data-select2-id="select-emp" tabindex="-1" aria-hidden="true" direction="rtl">
 
                                                 @foreach($users as $user)
-                                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                                    <option value="{{$user->id}}">{{$user->full_name}}</option>
                                                 @endforeach
 
                                             </select>
@@ -112,14 +112,14 @@
 
                                         <div class="col-md-2">
 
-                                            <select class="form-control select2 select2-hidden-accessible  form-control-solid select-evaluator"  id="" name="sections[]" multiple="" data-select2-id="kt_select2_3" tabindex="-1" aria-hidden="true" direction="rtl" disabled>
+                                            <select class="form-control select2 select2-hidden-accessible  form-control-solid select-evaluator"  id="" name="sections[]" multiple="" data-select2-id="" tabindex="-1" aria-hidden="true" direction="rtl" disabled>
                                             </select>
                                             <div class="d-md-none mb-2"></div>
                                         </div>
                                         <div class="col-md-7">
 
 
-                                            <select class="form-control select2 select2-hidden-accessible  form-control-solid select-employee"  id="select-emp" name="sections[]" multiple="" data-select2-id="kt_select2_3" tabindex="-1" aria-hidden="true" direction="rtl" disabled>
+                                            <select class="form-control select2 select2-hidden-accessible  form-control-solid select-employee"  id="" name="sections[]" multiple="" data-select2-id="" tabindex="-1" aria-hidden="true" direction="rtl" disabled>
                                             </select>
 
 
@@ -220,20 +220,59 @@
             let i =10;
             $(document).on('click','.btn-add',function (e) {
                 e.preventDefault();
-                var newel = $(this).parent().parent().siblings('.group-duplicate').clone();
-                newel.show()
-                newel.find('select')
-                    .prop("disabled", false)
 
-                newel.find('.select-evaluator').prop("id", '#select-evaluator'+i)
-                newel.find('.select-employee').prop("id", '#select-employee'+i)
 
+                var newel = ` <div class="group-duplicate">
+                            <div class="row mb-2">
+
+                                <div data-repeater-list="" class="col-lg-10">
+                                    <div data-repeater-item="" class="form-group row align-items-center">
+
+                                        <div class="col-md-4">
+
+                                            <select class="form-control select2 select2-hidden-accessible  form-control-solid "  id=`+i+` name="sections[]" multiple="" data-select2-id=`+i+` tabindex="-1" aria-hidden="true" direction="rtl" >
+                                                 @foreach($users as $user)
+                <option value="{{$user->id}}">{{$user->full_name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="d-md-none mb-2"></div>
+                                        </div>
+                                        <div class="col-md-6">
+
+
+                                            <select class="form-control select2 select2-hidden-accessible  form-control-solid "  id="2" name="sections[]" multiple="" data-select2-id="2" tabindex="-1" aria-hidden="true" direction="rtl" >
+                                           @foreach($users as $user)
+                                                 <option value="{{$user->id}}">{{$user->full_name}}</option>
+                                                @endforeach
+
+                                            </select>
+
+
+
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a href="javascript:;" data-repeater-delete="" class="btn btn-sm font-weight-bolder btn-light-danger">
+                                                <i class="la la-trash-o"></i>حذف</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                // newel.show()
+                // newel.find('select')
+                //     .prop("disabled", false)
+                //
+                // newel.find('.select-evaluator').prop("id",'select-evaluator'+i)
+                // newel.find('.select-evaluator').prop("data-select2-id",'select-evaluator'+i)
+                // newel.find('.select-employee').prop("id",'select-employee'+i)
+                // newel.find('.select-employee').prop("data-select2-id",'select-employee'+i)
                 // newel.find('.select-evaluator').select2('destroy').select2()
 
                 // newel.find('.number').text(i)
-                newel.removeClass('group-duplicate')
+                // newel.removeClass('group-duplicate')
 
                 $(newel).insertBefore($(this).parent().parent());
+                $(".select2").select2();
                 i++;
             });
 

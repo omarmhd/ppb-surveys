@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Survey;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 /*
@@ -14,6 +16,30 @@ use App\Http\Controllers\EmployeeController;
 */
 
 
+route::group(['middleware'=>'auth'],function (){
+
+    Route::get("",[\App\Http\Controllers\DashboardController::class,'index']);
+
+
+
+//Route::post('/employee',[\App\Http\Controllers\EmployeeController::class,'store'])->name('employee.store');
+    Route::resource("/employee",EmployeeController::class);
+    Route::resource("/users",\App\Http\Controllers\UserController::class);
+
+    Route::resource("/sections",\App\Http\Controllers\SectionController::class);
+    Route::post("/question/{section}",[\App\Http\Controllers\SectionController::class,'storeQuestion'])->name("question.store");
+
+    Route::resource("/surveys",\App\Http\Controllers\SurveyController::class);
+
+
+    Route::resource('activated-surveys',\App\Http\Controllers\ActivatedSurveyController::class);
+
+    Route::get("activated-surveys/accepted/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'updateAccepted'])->name('accepted.update');
+
+
+
+
+
 //Route::post('/employee',[\App\Http\Controllers\EmployeeController::class,'store'])->name('employee.store');
 Route::resource("/employee",EmployeeController::class);
 Route::resource("/users",\App\Http\Controllers\UserController::class);
@@ -25,8 +51,12 @@ Route::resource("/surveys",\App\Http\Controllers\SurveyController::class);
 
 
 Route::resource('activated-surveys',\App\Http\Controllers\ActivatedSurveyController::class);
+    Route::put("activated-surveys/evaluation/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'evaluation'])->name('evaluation.update');
 
+Route::get("activated-surveys/accepted/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'updateAccepted'])->name('accepted.update');
 
-
-
+});
 //Route::resource("/employee",EmployeeController::class);
+
+Auth::routes();
+

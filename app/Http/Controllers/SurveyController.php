@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CurrantSurvey;
+use App\Models\Point;
 use App\Models\Section;
+use App\Models\SectionSurvey;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,9 +19,15 @@ class SurveyController extends Controller
             $data = Survey::latest()->get();
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('count_sections', function ($data) {
+                    return $data->sections->count("id");
+
+                })
 
                 ->addColumn('action', function ($data) {
-                    $actionBtn = '<a href="' . route('surveys.edit', $data) . '" class="edit btn btn-primary btn-sm"><i class="fa fa-pen"></i> تعديل</a> <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i> حذف</a>';
+                    $actionBtn = '<a href="' . route('surveys.edit', $data) . '" class="edit btn btn-primary btn-sm"><i class="fa fa-pen"></i> تعديل</a>
+                   <a href="'.route('surveys.show',['survey'=>$data]).'" class="btn btn-info btn-sm"><i class="fa fa-search"></i> معاينة</a>
+                <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i> حذف</a>';
                     return $actionBtn;
                 })
                 ->rawColumns([ 'action'])
@@ -77,6 +86,16 @@ class SurveyController extends Controller
 
     }
 
+
+    public function show(Survey $survey){
+        $points=Point::all();
+
+
+
+        return view('surveys.show',compact('points','survey'));
+
+    }
+
     public function edit(Survey $survey)
     {
         $sections=Section::all();
@@ -121,5 +140,20 @@ class SurveyController extends Controller
 
 
     }
+
+    public function  destroy(Survey $survey){
+        $currant=CurrantSurvey::firstWhere('survey_id',$survey->id)->exists();
+
+        if(!$currant){
+        $survey->delete();
+        return response()->json(['status' => 'success']);
+
+        }
+         return response()->json(['status' => 'error','message'=>'خطأّّ لايمكن حذف النموذج لأنه مفعل مسبقا']);
+
+
+    }
+
+
 
 }

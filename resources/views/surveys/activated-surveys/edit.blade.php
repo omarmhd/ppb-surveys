@@ -1,5 +1,5 @@
 @extends('layouts.app_admin')
-@section('title',' إنشاء نموذج')
+@section('title','  تعديل بيانات نموذج موظف  ')
 @section('toolbar.title','لوحة التحكم')
 @section('breadcrumb')
     <!--begin::Item-->
@@ -8,9 +8,8 @@
     </li>
 
     <li class="breadcrumb-item text-muted">@yield('title')</li>
-
-
 @endsection
+
 @section('content')
     <!--begin::Form Widget 13-->
     <div class="card">
@@ -20,16 +19,17 @@
             <!--begin::Heading-->
             <div class="mb-13 mt-5 text-start">
                 <!--begin::Title-->
-                <h1 class="mb-3">@yield('title')</h1>
+                <h1 class="mb-3">@yield('title') : {{$activated_survey->employee->full_name}}</h1>
                 <!--end::Title-->
                 <!--begin::Description-->
                 <div class="text-gray-400 fw-bold fs-5">
-{{--                    <a href="{{route('users.index')}}" class="fw-bolder link-primary">جميع المستخدمين</a>.--}}
+{{--                    <a href="{{route('activated-surveys.index')}}" class="fw-bolder link-primary">جميع المستخدمين</a>.--}}
                 </div>
                 <!--end::Description-->
             </div>
-            <form id="form1" class="form" method="POST" action="javascript:void(0)">
+            <form id="form1" class="form" method="post" action="javascript:void(0)">
 
+            @method("put")
             @csrf
             <!--begin::Input group-->
                 <div class="row g-9 mb-8">
@@ -40,81 +40,120 @@
                     <div class="col-md-6 fv-row">
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">عنوان الاستبيان</span>
+                            <span class="required"> الاستبيان</span>
                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                title=""></i>
                         </label>
                         <!--end::Label-->
-                        <input id="" type="text" class="form-control form-control-solid"
-                               placeholder="العنوان"
-                               name="title"/>
-                    </div>
+                        <select  name="survey_id" class="js-example-matcher-start  js-states form-control  form-control-solid" id="select2-data-1-r80d"  data-select2-id="select2-data-1-r80d" tabindex="-1" aria-hidden="true">
 
-
-                    <div class="col-md-6 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">التفاصيل</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                               title=""></i>
-                        </label>
-
-                        <!--end::Label-->
-                        <input id="id_number" type="text" class="form-control form-control-solid"
-                               placeholder="التفاصيل "
-                               name="description"/>
-                    </div>
-
-                    <div class="col-md-6 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">الأقسام بالترتيب</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                               title=""></i>
-                        </label>
-                        <!--end::Label-->
-                        <select class="form-control select2 select2-hidden-accessible  form-control-solid"  id="kt_select2_3" name="sections[]" multiple="" data-select2-id="kt_select2_3" tabindex="-1" aria-hidden="true" direction="rtl">
-                            @foreach($sections as $section)
-                                <option selected value="{{$section->id}}">{{$section->title}}</option>
+                            @foreach($surveys as $survey)
+                                <option {{$activated_survey->id==$survey->id?"selected":""}} value="{{$survey->id}}">{{$survey->title}}</option>
                             @endforeach
                         </select>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                    <div id="kt_repeater_1">
+
+                        <div class="">
+                            <div class="row mb-2">
+                                {{--                        <label class="col-lg-2 col-form-label text-right"> تفاصيل السؤال   <span class="number"></span> :</label>--}}
+                                <div data-repeater-list="" class="col-lg-10">
+                                    <div data-repeater-item="" class="form-group row align-items-center">
+
+                                        <div class="col-md-4">
+                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                <span class="required"> المقيم </span>
+{{--                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
+{{--                                                   title=""></i>--}}
+                                            </label>
+
+                                            {{--                                    <label>السؤال:</label>--}}
+
+                                            <select class="form-control   form-control-solid"  id="select-eva" name="evaluator_id">
+
+                                                @foreach($users as $user)
+                                                    <option {{$activated_survey->evaluator_id==$user->id?"selected":""}}  value="{{$user->id}}">{{$user->full_name}}</option>
+                                                @endforeach
+                                            </select>                                            <div class="d-md-none mb-2"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                                                <span class="required"> الموظف </span>
+                                                {{--                                                <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
+                                                {{--                                                   title=""></i>--}}
+                                            </label>
+
+                                            <select class="form-control    form-control-solid"  id="select-emp" name="employee_id" >
+
+                                                @foreach($users as $user)
+                                                    <option {{$activated_survey->employee_id==$user->id?"selected":""}}  value="{{$user->id}}">{{$user->full_name}}</option>
+                                                @endforeach
+
+                                            </select>
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
                     </div>
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
-{{--                            <span class="required">تاريخ البدء</span>--}}
-{{--                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
-{{--                               title="الصلاحيات  التي يتم توزيعها على مُستخدمي النظام"></i>--}}
-{{--                        </label>--}}
 
-{{--                        <!--end::Label-->--}}
-{{--                        <input type="date" class="form-control" id="kt_datepicker_1" readonly="readonly" placeholder="Select date">--}}
-{{--                    </div>--}}
 
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
-{{--                            <span class="required">تاريخ الانتهاء</span>--}}
-{{--                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
-{{--                               title="الصلاحيات  التي يتم توزيعها على مُستخدمي النظام"></i>--}}
-{{--                        </label>--}}
+                    <hr>
+                    <h5 class="mb-4">إعدادت أخرى :</h5>
+                    <div class="clearfix visible-sm"></div>
+                    <div class="col-md-4">
 
-{{--                        <!--end::Label-->--}}
-{{--                        <input type="date" class="form-control" id="kt_datepicker_1" readonly="readonly" placeholder="Select date">--}}
-{{--                    </div>--}}
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="required">حالة الظهور </span>
+                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                               title=""></i>
+                        </label>
+                        <select class="form-control form-control-solid"  name="status" >
 
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <div class="checkbox-inline">--}}
-{{--                            <label class="checkbox">--}}
-{{--                                <input type="checkbox" name="is_open">--}}
-{{--                                <span></span>مفتوح</label>--}}
+                                 <option value="private">خاص</option>
+                                 <option value="published">مرفوع</option>
 
-{{--                        </div>--}}
-{{--                    </div>--}}
+
+
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="required"> حالة التقيم</span>
+                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                               title=""></i>
+                        </label>
+                        <select class="form-control form-control-solid"  name="is_open" >
+
+                            <option value="0">مغلق</option>
+                            <option value="1">مفتوح</option>
+
+                        </select>
+                    </div>
+
+
 
                 </div>
+
 
 
                 <div class="text-center mt-20 ms-20 mb-20">
@@ -123,7 +162,7 @@
                         <span class="indicator-progress">الرجاء الإنتظار...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
-                    <a href="{{route("surveys.index")}}" class="btn btn-secondary"> <i class="fa fa-"></i>عودة</a>
+                    <a href="{{route("users.index")}}" class="btn btn-secondary"> <i class="fa fa-"></i>عودة</a>
                     <button type="reset" id="user_cancel" class="btn btn-white me-3">إلغاء</button>
                 </div>
                 <!--end::Actions-->
@@ -137,17 +176,10 @@
 @endsection
 @push('js')
 
-    <script src="https://preview.keenthemes.com//metronic/theme/html/demo1/dist/assets/js/pages/crud/forms/widgets/select2.js?v=7.2.9"></script>
-    <script>
-        $(function () {
-            $('#kt_select2_3, #kt_select2_12_2, #kt_select2_12_3, #kt_select2_12_4').select2({
-                placeholder: " اختيار",
-            });
-        });
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    </script>
 
-    @include("parts.sweetCreate", ['route' => route('surveys.store'),'method'=>'post'])
+    @include("parts.sweetCreate", ['route' => route('activated-surveys.update',['activated_survey'=>$activated_survey]),'method'=>'put'])
 
 @endpush
 

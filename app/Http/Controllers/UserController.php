@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CurrantSurvey;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Result;
 use App\Models\User;
 use http\Encoding\Stream\Enbrotli;
 use Illuminate\Http\Request;
@@ -69,7 +71,25 @@ class UserController extends Controller
 
     public function  show($id){
 
-        return view("users.show");
+
+        $surveyLatest=CurrantSurvey::where('employee_id',$id)->latest()->first();
+        if($surveyLatest){
+
+
+        $surveysCurrant=CurrantSurvey::where(['employee_id'=>$id,'is_evaluated'=>1]);
+        $countsurveys=$surveysCurrant->count();
+
+            $avgScore=$countsurveys>0?($surveysCurrant->sum("score")/$surveysCurrant->count("is_evaluated")):0  ;
+
+
+        $surveys =$surveysCurrant->paginate(4);
+//        $sectionResult=Result::where("employee_id",$id)->get()->groupBy('employee_id');
+
+        $user=User::findOrFail($id);
+        return view("users.show",compact('surveyLatest','user','surveys','avgScore'));
+        }
+
+        return redirect()->back()->with('error',"لا يوجد تقيمات لهذا الحساب في الوقت الحالي ");
     }
 
     public  function edit(User $user){

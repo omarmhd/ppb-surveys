@@ -1,6 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
+
         globalThis.table = $('#table_id').DataTable({
             processing: true,
             serverSide: true,
@@ -19,7 +20,7 @@
 
                 {data: 'title', name: 'name'},
                 {data: 'description', name: 'full_name'},
-
+                {data: 'count_sections', name: 'full_name'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]

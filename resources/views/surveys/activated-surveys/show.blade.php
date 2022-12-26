@@ -168,7 +168,7 @@
 @push('js')
 
 
-    @include("parts.sweetCreate", ['route' => route('activated-surveys.update',['activated_survey'=>$survey]),'method'=>'put'])
+    @include("parts.sweetCreate", ['route' => route('evaluation.update',['id'=>$survey]),'method'=>'put'])
 
 @endpush
 

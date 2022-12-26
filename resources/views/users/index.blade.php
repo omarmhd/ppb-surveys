@@ -11,7 +11,6 @@
 @endsection
 @push('css')
 
-    /html/metronic/docs/assets/plugins/custom/datatables/datatables.bundle.css
 
     <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet"
           type="text/css"/>

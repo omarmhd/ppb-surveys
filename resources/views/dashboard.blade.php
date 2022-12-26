@@ -1,5 +1,5 @@
 @extends('layouts.app_admin')
-@section('title',' إنشاء نموذج')
+@section('title','الرئيسية')
 @section('toolbar.title','لوحة التحكم')
 @section('breadcrumb')
     <!--begin::Item-->
@@ -8,146 +8,84 @@
     </li>
 
     <li class="breadcrumb-item text-muted">@yield('title')</li>
-
-
 @endsection
 @section('content')
     <!--begin::Form Widget 13-->
-    <div class="card">
-        <!--begin::Body-->
-        <div class="card-body py-1">
-            <!--begin:Form-->
-            <!--begin::Heading-->
-            <div class="mb-13 mt-5 text-start">
-                <!--begin::Title-->
-                <h1 class="mb-3">@yield('title')</h1>
-                <!--end::Title-->
-                <!--begin::Description-->
-                <div class="text-gray-400 fw-bold fs-5">
-{{--                    <a href="{{route('users.index')}}" class="fw-bolder link-primary">جميع المستخدمين</a>.--}}
+    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+        <!--begin::Col-->
+        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
+            <!--begin::Card widget 20-->
+            <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end h-md-50 mb-5 mb-xl-10" style="background-color: #F1416C;background-image:url('/metronic8/demo1/assets/media/patterns/vector-1.png')">
+                <!--begin::Header-->
+                <div class="card-header pt-5">
+                    <!--begin::Title-->
+                    <div class="card-title d-flex flex-column">
+
+
+                        <!--begin::Amount-->
+                        <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2"></span>
+                        <!--end::Amount-->
+                        <!--begin::Subtitle-->
+                        <span class="text-white opacity-75 pt-1 fw-semibold fs-6">عدد النماذج التي تم تقيمها</span>
+                        <!--end::Subtitle-->
+                    </div>
+                    <!--end::Title-->
                 </div>
-                <!--end::Description-->
-            </div>
-            <form id="form1" class="form" method="POST" action="javascript:void(0)">
-
-            @csrf
-            <!--begin::Input group-->
-                <div class="row g-9 mb-8">
-
-
-
-
-                    <div class="col-md-6 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">عنوان الاستبيان</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                               title=""></i>
-                        </label>
-                        <!--end::Label-->
-                        <input id="" type="text" class="form-control form-control-solid"
-                               placeholder="العنوان"
-                               name="title"/>
-                    </div>
-
-
-                    <div class="col-md-6 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">التفاصيل</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                               title=""></i>
-                        </label>
-
-                        <!--end::Label-->
-                        <input id="id_number" type="text" class="form-control form-control-solid"
-                               placeholder="التفاصيل "
-                               name="description"/>
-                    </div>
-
-                    <div class="col-md-6 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">الأقسام بالترتيب</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                               title=""></i>
-                        </label>
-                        <!--end::Label-->
-                        <select class="form-control select2 select2-hidden-accessible  form-control-solid"  id="kt_select2_3" name="sections[]" multiple="" data-select2-id="kt_select2_3" tabindex="-1" aria-hidden="true" direction="rtl">
-                            @foreach($sections as $section)
-                                <option selected value="{{$section->id}}">{{$section->title}}</option>
-                            @endforeach
-                        </select>
-
-                    </div>
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
-{{--                            <span class="required">تاريخ البدء</span>--}}
-{{--                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
-{{--                               title="الصلاحيات  التي يتم توزيعها على مُستخدمي النظام"></i>--}}
-{{--                        </label>--}}
-
-{{--                        <!--end::Label-->--}}
-{{--                        <input type="date" class="form-control" id="kt_datepicker_1" readonly="readonly" placeholder="Select date">--}}
-{{--                    </div>--}}
-
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
-{{--                            <span class="required">تاريخ الانتهاء</span>--}}
-{{--                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
-{{--                               title="الصلاحيات  التي يتم توزيعها على مُستخدمي النظام"></i>--}}
-{{--                        </label>--}}
-
-{{--                        <!--end::Label-->--}}
-{{--                        <input type="date" class="form-control" id="kt_datepicker_1" readonly="readonly" placeholder="Select date">--}}
-{{--                    </div>--}}
-
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <div class="checkbox-inline">--}}
-{{--                            <label class="checkbox">--}}
-{{--                                <input type="checkbox" name="is_open">--}}
-{{--                                <span></span>مفتوح</label>--}}
-
+                <!--end::Header-->
+                <!--begin::Card body-->
+                <div class="card-body d-flex align-items-end pt-0">
+                    <!--begin::Progress-->
+                    <div class="d-flex align-items-center flex-column mt-3 w-100">
+{{--                        <div class="d-flex justify-content-between fw-bold fs-6 text-white opacity-75 w-100 mt-auto mb-2">--}}
+{{--                            <span>متوسط أداء الموظفين خلال العام الحالي</span>--}}
+{{--                            <span>72%</span>--}}
 {{--                        </div>--}}
-{{--                    </div>--}}
-
+                        <div class="h-8px mx-3 w-100 bg-white bg-opacity-50 rounded">
+                            <div class="bg-white rounded h-8px" role="progressbar" style="width: 72%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <!--end::Progress-->
                 </div>
-
-
-                <div class="text-center mt-20 ms-20 mb-20">
-                    <button type="submit" id="user_submit" class="btn btn-primary">
-                        <span class="indicator-label"><i class="fa fa-save"></i> حفظ </span>
-                        <span class="indicator-progress">الرجاء الإنتظار...
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                    </button>
-                    <a href="{{route("surveys.index")}}" class="btn btn-secondary"> <i class="fa fa-"></i>عودة</a>
-                    <button type="reset" id="user_cancel" class="btn btn-white me-3">إلغاء</button>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card widget 20-->
+            <!--begin::Card widget 7-->
+            <div class="card card-flush h-md-50 mb-5 mb-xl-10">
+                <!--begin::Header-->
+                <div class="card-header pt-5">
+                    <!--begin::Title-->
+                    <div class="card-title d-flex flex-column">
+                        <!--begin::Amount-->
+                        <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{$evaluator_count}}</span>
+                        <!--end::Amount-->
+                        <!--begin::Subtitle-->
+                        <span class="text-gray-400 pt-1 fw-semibold fs-6">عدد المقيمين</span>
+                        <!--end::Subtitle-->
+                    </div>
+                    <!--end::Title-->
                 </div>
-                <!--end::Actions-->
-            </form>
-            <!--end:Form-->
+                <!--end::Header-->
+                <!--begin::Card body-->
+                <div class="card-body d-flex flex-column justify-content-end pe-0">
+                    <!--begin::Title-->
+
+                    <!--end::Title-->
+                    <!--begin::Users group-->
+
+                    <!--end::Users group-->
+                </div>
+                <!--end::Card body-->
+            </div>
+            <!--end::Card widget 7-->
         </div>
-        <!--begin::Body-->
+        <!--end::Col-->
+        <!--begin::Col-->
+
+        <!--end::Col-->
     </div>
     <!--end::Form Widget 13-->
-
 @endsection
 @push('js')
-
-    <script src="https://preview.keenthemes.com//metronic/theme/html/demo1/dist/assets/js/pages/crud/forms/widgets/select2.js?v=7.2.9"></script>
-    <script>
-        $(function () {
-            $('#kt_select2_3, #kt_select2_12_2, #kt_select2_12_3, #kt_select2_12_4').select2({
-                placeholder: " اختيار",
-            });
-        });
-
-    </script>
-
-    @include("parts.sweetCreate", ['route' => route('surveys.store'),'method'=>'post'])
 
 @endpush
 

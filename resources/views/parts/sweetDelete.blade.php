@@ -39,6 +39,17 @@
                                 'success'
                             )
                         };
+
+                        if (result.status =="error") {
+
+                            Swal.fire({
+                                position: 'top-center',
+                                icon:result.status ,
+                                text: result.message,
+                                showConfirmButton: false,
+                                timer: 1600
+                            })
+                        };
                         table.ajax.reload();
                     },
                     error: function(result) {

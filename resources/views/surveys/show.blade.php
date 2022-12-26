@@ -1,5 +1,5 @@
 @extends('layouts.app_admin')
-@section('title',' إنشاء نموذج')
+@section('title','الإستبيانات')
 @section('toolbar.title','لوحة التحكم')
 @section('breadcrumb')
     <!--begin::Item-->
@@ -8,9 +8,8 @@
     </li>
 
     <li class="breadcrumb-item text-muted">@yield('title')</li>
-
-
 @endsection
+
 @section('content')
     <!--begin::Form Widget 13-->
     <div class="card">
@@ -20,112 +19,131 @@
             <!--begin::Heading-->
             <div class="mb-13 mt-5 text-start">
                 <!--begin::Title-->
-                <h1 class="mb-3">@yield('title')</h1>
+                <h1 class="mb-3"><i class="fa fa-search fs-1"></i>معاينة استبانة :  {{$survey->title}}  </h1>
                 <!--end::Title-->
                 <!--begin::Description-->
                 <div class="text-gray-400 fw-bold fs-5">
-{{--                    <a href="{{route('users.index')}}" class="fw-bolder link-primary">جميع المستخدمين</a>.--}}
+{{--                    <a href="{{route('activated-surveys.index')}}" class="fw-bolder link-primary">استبانات التقيم الأخرى</a>.--}}
                 </div>
                 <!--end::Description-->
             </div>
             <form id="form1" class="form" method="POST" action="javascript:void(0)">
-
-            @csrf
-            <!--begin::Input group-->
+                @method('put')
+                @csrf
                 <div class="row g-9 mb-8">
+                        <div class="col-md-12 fv-row">
+                        <div class="table-responsive">
 
+                    <!--begin::Table-->
+                    <table id="table_id"
+                           class="table   table-striped table-hover  table-bordered  align-middle  text-center fs-7">
+                        <!--begin::Table head-->
+                        <thead class="thead-dark">
+                        <tr class="fw-bolder  bg-secondary text-muted " >
 
+                            <th class="min-w-40px text-center align-middle" rowspan="2">المجال</th>
 
+                            <th class="min-w-300px text-center align-middle" rowspan="2">معيار التقيم</th>
 
-                    <div class="col-md-6 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">عنوان الاستبيان</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                               title=""></i>
-                        </label>
-                        <!--end::Label-->
-                        <input id="" type="text" class="form-control form-control-solid"
-                               placeholder="العنوان"
-                               name="title"/>
-                    </div>
+                            <th  class="min-w-300px text-center align-middle" colspan="5">
+                                الدرجة المناظرة للتقدير
+                            </th>
 
+                        </tr>
+                        <tr>
 
-                    <div class="col-md-6 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">التفاصيل</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                               title=""></i>
-                        </label>
-
-                        <!--end::Label-->
-                        <input id="id_number" type="text" class="form-control form-control-solid"
-                               placeholder="التفاصيل "
-                               name="description"/>
-                    </div>
-
-                    <div class="col-md-6 fv-row">
-                        <!--begin::Label-->
-                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required">الأقسام بالترتيب</span>
-                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
-                               title=""></i>
-                        </label>
-                        <!--end::Label-->
-                        <select class="form-control select2 select2-hidden-accessible  form-control-solid"  id="kt_select2_3" name="sections[]" multiple="" data-select2-id="kt_select2_3" tabindex="-1" aria-hidden="true" direction="rtl">
-                            @foreach($sections as $section)
-                                <option selected value="{{$section->id}}">{{$section->title}}</option>
+                            @foreach($points as $point)
+                                <th class="min-w-20px text-center ">{{$point->name}}</th>
                             @endforeach
-                        </select>
+
+                        </tr>
+
+
+
+
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                        @foreach($survey->sections as $key=>$section)
+                            <tr>
+                                    <td rowspan="{{$section->questions->count()}}">
+                                        {{$section->title}}
+
+
+                                    </td>
+
+
+
+
+                          @foreach($section->questions as $key=>$question)
+
+
+
+                             @if($key>0)
+
+                                 <tr>
+
+
+                             @endif
+                                <td>{{$question->name}} </td>
+
+                               @foreach($points as $point)
+
+                                    <td><input type="radio" class="form-check-input radio-sm"  name="results[{{$question->id}}]" value="{{$point->score}}"></td>
+
+                                @endforeach
+                                 </tr>
+
+
+
+                          @endforeach
+
+
+
+
+
+              @endforeach
+
+
+
+                        </tbody>
+
+
+
+
+
+                        <!--end::Table head-->
+                    </table>
+                    <!--end::Table-->
+                </div>
+                    </div>
+
+                    <div class="col-md-6 fv-row">
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class=""> الملاحظات إن وجدت</span>
+                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                               title="تظهر هذه الملاحظات للموظف كتغذية راجعة "></i>
+                        </label>
+                        <!--end::Label-->
+                        <textarea id=""  class="form-control form-control-solid" name="notes" rows="5"
+                               placeholder="الملاحظات"
+                                  name="title"/>
+
+                        </textarea>
 
                     </div>
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
-{{--                            <span class="required">تاريخ البدء</span>--}}
-{{--                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
-{{--                               title="الصلاحيات  التي يتم توزيعها على مُستخدمي النظام"></i>--}}
-{{--                        </label>--}}
-
-{{--                        <!--end::Label-->--}}
-{{--                        <input type="date" class="form-control" id="kt_datepicker_1" readonly="readonly" placeholder="Select date">--}}
-{{--                    </div>--}}
-
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">--}}
-{{--                            <span class="required">تاريخ الانتهاء</span>--}}
-{{--                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"--}}
-{{--                               title="الصلاحيات  التي يتم توزيعها على مُستخدمي النظام"></i>--}}
-{{--                        </label>--}}
-
-{{--                        <!--end::Label-->--}}
-{{--                        <input type="date" class="form-control" id="kt_datepicker_1" readonly="readonly" placeholder="Select date">--}}
-{{--                    </div>--}}
-
-{{--                    <div class="col-md-6 fv-row">--}}
-{{--                        <!--begin::Label-->--}}
-{{--                        <div class="checkbox-inline">--}}
-{{--                            <label class="checkbox">--}}
-{{--                                <input type="checkbox" name="is_open">--}}
-{{--                                <span></span>مفتوح</label>--}}
-
-{{--                        </div>--}}
-{{--                    </div>--}}
-
                 </div>
 
 
-                <div class="text-center mt-20 ms-20 mb-20">
-                    <button type="submit" id="user_submit" class="btn btn-primary">
-                        <span class="indicator-label"><i class="fa fa-save"></i> حفظ </span>
-                        <span class="indicator-progress">الرجاء الإنتظار...
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-                    </button>
-                    <a href="{{route("surveys.index")}}" class="btn btn-secondary"> <i class="fa fa-"></i>عودة</a>
-                    <button type="reset" id="user_cancel" class="btn btn-white me-3">إلغاء</button>
-                </div>
+
+
+
+
+
                 <!--end::Actions-->
             </form>
             <!--end:Form-->
@@ -135,21 +153,7 @@
     <!--end::Form Widget 13-->
 
 @endsection
-@push('js')
 
-    <script src="https://preview.keenthemes.com//metronic/theme/html/demo1/dist/assets/js/pages/crud/forms/widgets/select2.js?v=7.2.9"></script>
-    <script>
-        $(function () {
-            $('#kt_select2_3, #kt_select2_12_2, #kt_select2_12_3, #kt_select2_12_4').select2({
-                placeholder: " اختيار",
-            });
-        });
-
-    </script>
-
-    @include("parts.sweetCreate", ['route' => route('surveys.store'),'method'=>'post'])
-
-@endpush
 
 {{--@push('js')--}}
 {{--    <script>--}}

@@ -18,6 +18,8 @@
 @section('content')
 
 
+
+
     <!--begin::Tables Widget 13-->
     <div class="card ">
         <!--begin::Card header-->
@@ -36,7 +38,7 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-table-toolbar="base">
 
-                    <a href="{{route('surveys.create')}}" class="btn btn-success "> إضافة استبيان <i class="fa fa-plus"></i></a>
+                    <a href="{{route('surveys.create')}}" class="btn btn-success "> إنشاء نموذج تقيم <i class="fa fa-plus"></i></a>
 
                 </div>
                 <!--end::Toolbar-->
@@ -69,8 +71,10 @@
 
                         <th class="min-w-150px text-center" >العنوان</th>
                         <th class="min-w-120px text-center">التفاصيل</th>
+                        <th class="min-w-120px text-center">عدد الأقسام</th>
+
                         <th class="min-w-125px text-center">تاريخ الإنشاء</th>
-                        <th class="min-w-15px text-center">الإجراءات</th>
+                        <th class="min-w-100px text-center">الإجراءات</th>
                     </tr>
 
 

@@ -76,7 +76,7 @@
             <option  disabled selected>اختيار</option>
             <option {{old('role',$user->role=="employee"?"selected":"") }}  value="employee">موظف</option>
             <option {{old('role',$user->role=="evaluator"?"selected":"") }} value="evaluator">مقيم</option>
-            <option {{old('role',$user->role=="administer"?"selected":"") }} value="administer">مسؤول النظام</option>
+            <option {{old('role',$user->role=="administrator"?"selected":"") }} value="administrator">مسؤول النظام</option>
         </select>
 
 
