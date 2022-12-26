@@ -268,8 +268,8 @@ class ActivatedSurveyController extends Controller
 
         if ($activated_survey->is_evaluated=="1"){
             return response()->json(['success' => "error", 'message' => "نأسف!تم التقبم مسبقا لا يمكن التقيم مرة أخرى"]);
-
         }
+
         if ($cont_results!==$activated_survey->results->count() || $cont_results==0){
             return response()->json(['success' => "error", 'message' => "نأسف! التقيم غير مكتمل"]);
 
