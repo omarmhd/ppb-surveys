@@ -51,7 +51,9 @@ Route::resource("/surveys",\App\Http\Controllers\SurveyController::class);
 
 
 Route::resource('activated-surveys',\App\Http\Controllers\ActivatedSurveyController::class);
-    Route::put("activated-surveys/evaluation/{activated_survey}",[\App\Http\Controllers\ActivatedSurveyController::class,'evaluation'])->name('evaluation.update');
+Route::put("activated-surveys/evaluation/{activated_survey}",[\App\Http\Controllers\ActivatedSurveyController::class,'evaluation'])->name('evaluation.update');
+
+Route::get('show-my-evaluation',[\App\Http\Controllers\UserController::class,'showMyEvaluation'])->name('showMyEvaluation');
 
 Route::get("activated-surveys/accepted/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'updateAccepted'])->name('accepted.update');
 

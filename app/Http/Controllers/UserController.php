@@ -71,9 +71,11 @@ class UserController extends Controller
 
     public function  show($id){
 
+        $surveysCurrant=CurrantSurvey::where('employee_id',$id)->where('is_evaluated',1)->where('status','published')->where('is_open',1);
 
-        $surveyLatest=CurrantSurvey::where('employee_id',$id)->latest()->first();
-        if($surveyLatest){
+        $surveyLatest=$surveysCurrant->latest()->first();
+
+        if($surveysCurrant){
 
 
         $surveysCurrant=CurrantSurvey::where(['employee_id'=>$id,'is_evaluated'=>1]);
@@ -92,10 +94,36 @@ class UserController extends Controller
         return redirect()->back()->with('error',"لا يوجد تقيمات لهذا الحساب في الوقت الحالي ");
     }
 
+    public function showMyEvaluation(){
+
+        $id=auth()->user()->id;
+        $surveysCurrantBefor=CurrantSurvey::where('employee_id',$id)->where('is_evaluated',"1")->where('status','published');
+
+        if( $surveysCurrantBefor->count()>0){
+
+            $surveyLatest=$surveysCurrantBefor->latest()->first();
+
+            $surveysCurrant=$surveysCurrantBefor->get();
+            $countsurveys=$surveysCurrant->count();
+
+            $avgScore=$countsurveys>0?($surveysCurrant->sum("score")/$surveysCurrant->count("is_evaluated")):0  ;
+
+
+            $surveys =$surveysCurrantBefor->paginate(4);
+
+//        $sectionResult=Result::where("employee_id",$id)->get()->groupBy('employee_id');
+
+            $user=User::findOrFail($id);
+            return view("users.show",compact('surveyLatest','user','surveys','avgScore'));
+        }
+
+
+        return redirect()->back()->with('error',"لا يوجد تقيمات لهذا الحساب في الوقت الحالي ");
+    }
+
+
+
     public  function edit(User $user){
-
-
-
 
         return view("users.edit",compact('user'));
     }

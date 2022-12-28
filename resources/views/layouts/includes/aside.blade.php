@@ -126,29 +126,30 @@
                             <span class="menu-title">النماذج المفعلة </span>
                         </a>
                     </div>
+
                 @endcan
 
 
 
 
 
-                @can('employee')
+
+
 
                 <div class="menu-item">
-                    <a class="menu-link" href="{{route('users.show',['user'=>auth()->user()->id])}}">
+                    <a class="menu-link" href="{{route('showMyEvaluation')}}">
 										<span class="menu-icon">
 											<!--begin::Svg Icon | path: icons/duotone/Design/PenAndRuller.svg-->
 								            <i class="fa fa-star"></i>
                                             <!--end::Svg Icon-->
 										</span>
                         <span class="menu-title">تقيماتي</span>
-                        <span class="badge bg-danger py-2 px-3">
-                           3
-                        </span>
+{{--                        <span class="badge bg-danger py-2 px-3">--}}
+{{--                           3--}}
+{{--                        </span>--}}
                     </a>
                 </div>
 
-                @endcan
 
             </div>
             <!--end::Menu-->

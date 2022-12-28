@@ -32,20 +32,20 @@ class ActivatedSurveyController extends Controller
             $data = CurrantSurvey::latest()->get();
 
 
-            if (($request->date_from && $request->date_to) ||$request->evaluator_id || $request->employee_id ) {
-
-                $data = CurrantSurvey::whereBetween('created_at',[$request->date_from,$request->date_to])->get();
-
-
-            }
+//            if (($request->date_from && $request->date_to) ||$request->evaluator_id || $request->employee_id ) {
+//
+//                $data = CurrantSurvey::whereBetween('created_at',[$request->date_from,$request->date_to])->get();
+//
+//
+//            }
             return DataTables::of($data)
                 ->addIndexColumn()
 
                 ->addColumn('status', function ($data) {
                     if($data->status=="private"){
-                        $actionBtn = '<i class="fa fa-eye"></i>';
+                        $actionBtn = '<i class="fa  fa-eye-slash"></i>';
                     }else{
-                        $actionBtn = '<i class="fa fa-eye-slash"></i>';
+                        $actionBtn = '<i class="fa fa-eye"></i>';
 
                     }
                     return $actionBtn;
@@ -111,17 +111,12 @@ class ActivatedSurveyController extends Controller
 
 
     public function show($id){
-//        $sectionResult=Result::where("currant_survey_id",$id)->get()->groupBy('currant_survey_id','section_surveys_id');
 
-//        $authors = Section::with(['s' => fn($query) => $query->where('title', 'like', 'PHP%')])
-//            ->whereHas('books', fn ($query) =>
-//            $query->where('title', 'like', 'PHP%')
-//            )
-//            ->get();
 
 
 
         $survey=CurrantSurvey::findorfail($id);
+
         if ($survey->is_evaluated==1){
             return  redirect()->back()->with('error','نأسف! لا يمكن التقيم مرة أخرى ');
         }
@@ -149,6 +144,8 @@ class ActivatedSurveyController extends Controller
 
 
     }
+
+
     public function  store(Request $request){
         $validator = Validator::make($request->all(), [
             'survey_id'=>"required",
@@ -203,29 +200,16 @@ class ActivatedSurveyController extends Controller
 
         }
 
-
-
-
-
         return response()->json(['success' => true, 'message' => "تم  تفعيل  النموذج"]);
-
-
-
-
-
-
-
-
-
-
 
 
     }
 
+
     public  function edit(CurrantSurvey $activated_survey){
 
         if ($activated_survey->is_evaluated=="1"){
-            return response()->json(['success' => false, 'message' => " خطأ! لايمكن التعديل على  بيانات الموظف الذي تم تقيمه "]);
+            return redirect()->back()->with('success',  " خطأ! لايمكن التعديل على  بيانات الموظف الذي تم تقيمه");
 
         }
 
@@ -270,7 +254,7 @@ class ActivatedSurveyController extends Controller
             return response()->json(['success' => "error", 'message' => "نأسف!تم التقبم مسبقا لا يمكن التقيم مرة أخرى"]);
         }
 
-        if ($cont_results!==$activated_survey->results->count() || $cont_results==0){
+        if ($cont_results!==$activated_survey->results->count() ||  $cont_results==0){
             return response()->json(['success' => "error", 'message' => "نأسف! التقيم غير مكتمل"]);
 
         }
