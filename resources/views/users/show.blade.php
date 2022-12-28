@@ -1,13 +1,13 @@
 @extends('layouts.app_admin')
-@section('title','عرض الموظفين')
-@section('toolbar.title','لوحة التحكم')
+
+
 @section('breadcrumb')
     <!--begin::Item-->
     <li class="breadcrumb-item">
         <span class="bullet bg-gray-400 w-5px h-2px"></span>
     </li>
 
-    <li class="breadcrumb-item text-muted">لوحة التحكم</li>
+    <li class="breadcrumb-item text-muted">تقيماتي</li>
 @endsection
 @push('css')
 
@@ -195,31 +195,19 @@
                     <!--begin::Card-->
                     <div class="card border border-2 border-gray-300 border-hover">
                         <!--begin::Card header-->
-                        <div class="card-header border-0 pt-9">
-                            <!--begin::Card Title-->
-                            <div class="card-title m-0">
-                                <!--begin::Avatar-->
-                                <div class="symbol symbol-50px w-50px bg-light">
 
-{{--                                    <img src="assets/media/svg/brand-logos/plurk.svg" alt="image" class="p-3">--}}
-                                </div>
-                                <!--end::Avatar-->
-                            </div>
-                            <!--end::Car Title-->
-                            <!--begin::Card toolbar-->
-                            <div class="card-toolbar">
-                                <span class="badge badge-light-primary fw-bolder me-auto px-4 py-3">10-10-2022</span>
-                            </div>
-                            <!--end::Card toolbar-->
-                        </div>
                         <!--end:: Card header-->
                         <!--begin:: Card body-->
                         <div class="card-body p-9">
                             <!--begin::Name-->
-                            <div class="fs-3 fw-bolder text-dark">نموذج استبيان 2022</div>
+
+                            <div class="fs-3 fw-bolder text-dark">{{$survey->survey->title}}
+                                <span class="badge badge-light-primary fw-bolder me-auto px-4 py-3 ">10-10-2022</span>
+
+                            </div>
                             <!--end::Name-->
                             <!--begin::Description-->
-                            <p class="text-gray-400 fw-bold fs-5 mt-1 mb-7">تفاصيل الاستبيان</p>
+                            <p class="text-gray-400 fw-bold fs-5 mt-1 mb-7">{{$survey->survey->description}}</p>
                             <!--end::Description-->
                             <!--begin::Info-->
                             <div class="d-flex flex-wrap mb-5">
@@ -252,6 +240,7 @@
                                 </div>
 
                                 @if($survey->is_accepted!=="1")
+
                                     <button  id="accepted" data-id="{{$survey->id}}" class="btn btn-primary position-absolute  end-0 ">
                                         <span class="indicator-label">أوافق</span>
                                         <span class="indicator-progress">الرجاء الإنتظار...

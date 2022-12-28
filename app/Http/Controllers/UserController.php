@@ -97,7 +97,7 @@ class UserController extends Controller
     public function showMyEvaluation(){
 
         $id=auth()->user()->id;
-        $surveysCurrantBefor=CurrantSurvey::where('employee_id',$id)->where('is_evaluated',"1")->where('status','published');
+        $surveysCurrantBefor=CurrantSurvey::with('survey')->where('employee_id',$id)->where('is_evaluated',"1")->where('status','published');
 
         if( $surveysCurrantBefor->count()>0){
 

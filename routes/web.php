@@ -18,7 +18,7 @@ use App\Http\Controllers\EmployeeController;
 
 route::group(['middleware'=>'auth'],function (){
 
-    Route::get("",[\App\Http\Controllers\DashboardController::class,'index']);
+    Route::get("",[\App\Http\Controllers\DashboardController::class,'index'])->name('dashboard');
 
 
 

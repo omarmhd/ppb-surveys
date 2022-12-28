@@ -16,6 +16,7 @@ use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Monolog\Handler\IFTTTHandler;
 use Yajra\DataTables\Facades\DataTables;
 
 class ActivatedSurveyController extends Controller
@@ -281,10 +282,12 @@ class ActivatedSurveyController extends Controller
     public function updateAccepted($id){
 
 
-        $ff=CurrantSurvey::where(["id"=>$id,"employee_id"=>2])->update(["is_accepted"=>0]);
+        $CurrantSurvey=CurrantSurvey::where(["id"=>$id,"employee_id"=>auth()->user()->id])->update(["is_accepted"=>1]);
+        if($CurrantSurvey) {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false]);
 
-
-        return response()->json(['success' => true]);
 
     }
 
