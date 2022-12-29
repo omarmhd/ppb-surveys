@@ -130,7 +130,7 @@
                                         <span class="fw-bolder fs-6">{{$surveyLatest->results->sum('score')}} %</span>
                                     </div>
                                     <div class="h-5px mx-3 w-100 bg-light mb-3">
-                                        <div class="bg-success rounded h-5px" role="progressbar" style="width: {{$surveyLatest->results->sum('score')}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="bg-success rounded h-5px {{$surveyLatest->results->sum('score')>70?"bg-success":"bg-warning"}} rounded h-4px" role="progressbar" style="width: {{$surveyLatest->results->sum('score')}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
                                 </div>
                                 <!--end::Progress-->
@@ -141,22 +141,22 @@
                     </div>
                     <!--end::Details-->
                     <!--begin::Navs-->
-                    <div class="d-flex overflow-auto h-55px">
-                        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary me-6 active" href="pages/profile/overview.html">تقيماتي</a>
-                            </li>
-                            <!--end::Nav item-->
-                            <!--begin::Nav item-->
-                            <li class="nav-item">
-                                <a class="nav-link text-active-primary me-6" href="pages/profile/projects.html">حسابي</a>
-                            </li>
+{{--                    <div class="d-flex overflow-auto h-55px">--}}
+{{--                        <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">--}}
+{{--                            <!--begin::Nav item-->--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a class="nav-link text-active-primary me-6 active" href="pages/profile/overview.html">تقيماتي</a>--}}
+{{--                            </li>--}}
+{{--                            <!--end::Nav item-->--}}
+{{--                            <!--begin::Nav item-->--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a class="nav-link text-active-primary me-6" href="pages/profile/projects.html">حسابي</a>--}}
+{{--                            </li>--}}
 
 
-                            <!--end::Nav item-->
-                        </ul>
-                    </div>
+{{--                            <!--end::Nav item-->--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
                     <!--begin::Navs-->
 
 
@@ -218,10 +218,10 @@
                                 </div>
                                 <!--end::Due-->
                                 <!--begin::Budget-->
-                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
-                                    <div class="fs-6 text-gray-800 fw-bolder hover-zoom text-danger"><span class="text-danger"><i class="fas fa-pen-square text-danger"></i> ملاحظات المقيم </span></div>
-                                    <div class="fw-bold text-gray-400"></div>
-                                </div>
+{{--                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">--}}
+{{--                                    <div class="fs-6 text-gray-800 fw-bolder hover-zoom text-danger"><span class="text-danger"><i class="fas fa-pen-square text-danger"></i> ملاحظات المقيم </span></div>--}}
+{{--                                    <div class="fw-bold text-gray-400"></div>--}}
+{{--                                </div>--}}
                                 <!--end::Budget-->
                             </div>
                             <!--end::Info-->

@@ -12,6 +12,7 @@ use App\Models\Section;
 use App\Models\SectionSurvey;
 use App\Models\Survey;
 use App\Models\User;
+use Carbon\Carbon;
 use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,12 +34,15 @@ class ActivatedSurveyController extends Controller
             $data = CurrantSurvey::latest()->get();
 
 
-//            if (($request->date_from && $request->date_to) ||$request->evaluator_id || $request->employee_id ) {
-//
-//                $data = CurrantSurvey::whereBetween('created_at',[$request->date_from,$request->date_to])->get();
-//
-//
-//            }
+            $startDate = Carbon::createFromFormat('Y-m-d', $request->date_from);
+            $endDate = Carbon::createFromFormat('Y-m-d', $request->date_to);
+
+
+            if (($request->date_from && $request->date_to) ||$request->evaluator_id || $request->employee_id ) {
+
+                $data = CurrantSurvey::whereBetween('created_at',[$startDate, $endDate])->latest()->get();
+
+            }
             return DataTables::of($data)
                 ->addIndexColumn()
 
