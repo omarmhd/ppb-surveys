@@ -10,14 +10,13 @@
     <li class="breadcrumb-item text-muted">تقيماتي</li>
 @endsection
 @push('css')
-
-
     <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet"
           type="text/css"/>
 @endpush
+
 @section('content')
-
-
+    @include('modals.acceptable')
+    @include('modals.notes')
     <!--end::Toolbar-->
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -202,7 +201,7 @@
                             <!--begin::Name-->
 
                             <div class="fs-3 fw-bolder text-dark">{{$survey->survey->title}}
-                                <span class="badge badge-light-primary fw-bolder me-auto px-4 py-3 ">10-10-2022</span>
+{{--                                <span class="badge badge-light-primary fw-bolder me-auto px-4 py-3 ">{{$survey->survey->title}}</span>--}}
 
                             </div>
                             <!--end::Name-->
@@ -212,16 +211,20 @@
                             <!--begin::Info-->
                             <div class="d-flex flex-wrap mb-5">
                                 <!--begin::Due-->
-                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-7 mb-3">
+                                <div class="border border-gray-300 border-solid rounded min-w-125px py-3 px-4 me-7 mb-3">
                                     <div class="fs-6 text-gray-800 fw-bolder">{{$survey->results->sum('score')}}%</div>
                                     <div class="fw-bold text-gray-400">درجة التقيم</div>
                                 </div>
                                 <!--end::Due-->
                                 <!--begin::Budget-->
-{{--                                <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">--}}
-{{--                                    <div class="fs-6 text-gray-800 fw-bolder hover-zoom text-danger"><span class="text-danger"><i class="fas fa-pen-square text-danger"></i> ملاحظات المقيم </span></div>--}}
-{{--                                    <div class="fw-bold text-gray-400"></div>--}}
-{{--                                </div>--}}
+                                @if($survey->evaluator_notes)
+                                <div class="border border-gray-300 border-solid rounded min-w-20px py-3 px-4 mb-3">
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#modal_notes"  data-note="{{$survey->evaluator_notes}}">
+                                    <div class="fs-6 text-gray-800 fw-bolder hover-zoom text-danger"><span class="text-danger"><i class="fas fa-pen-square text-danger"></i> ملاحظات المقيم </span></div>
+                                    <div class="fw-bold text-gray-400"></div>
+                                    </a>
+                                </div>
+                                @endif
                                 <!--end::Budget-->
                             </div>
                             <!--end::Info-->
@@ -239,16 +242,17 @@
                                     <img alt="Pic" src="https://cdn2.iconfinder.com/data/icons/flat-style-svg-icons-part-1/512/man_user_male_human_people-512.png">
                                 </div>
 
-                                @if($survey->is_accepted!=="1")
+                                @if($survey->status=="1" )
 
-                                    <button  id="accepted" data-id="{{$survey->id}}" class="btn btn-primary position-absolute  end-0 ">
-                                        <span class="indicator-label">أوافق</span>
+                                    <button  id=""  data-id="{{$survey->id}}" data-bs-toggle="modal" data-bs-target="#modal_acceptable"  class="btn btn-primary position-absolute  end-0 ">
+                                        <span class="indicator-label">الموافقة</span>
                                         <span class="indicator-progress">الرجاء الإنتظار...
-                            <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
-
-                                        </button>
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                        </span>
+                                    </button>
 
                                 @else
+
                                     <span id="" class="text-success position-absolute  end-0 "> <i class="fa fa-check text-success"></i> تمت الموافقة</span>
 
                             @endif
@@ -299,50 +303,67 @@
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
             <script>
+                var button=""
+
+                $('#modal_notes').on('show.bs.modal', function (event) {
+
+                    var btn_notes= $(event.relatedTarget) // Button that triggered the modal
+                    var note =btn_notes.data('note')
+
+                    var modal = $(this)
+
+                    modal.find('.notes_evaluator').text(note)
+
+
+                })
+                $('#modal_acceptable').on('show.bs.modal', function (event) {
+                    button = $(event.relatedTarget) // Button that triggered the modal
+                    var id = button.data('id')
+
+                    var modal = $(this)
+                    modal.find('#accepted').attr('data-id',id)
+
+
+                })
                 $(document).on('click', '#accepted', function(e) {
 
                     e.preventDefault();
 
                     var id = $(this).data('id')
-                    var  element=$(this)
-                    var url = "{{ route('accepted.update',['id'=>':id'])  }}";
+                    var note=$(this).parent().parent().find('.note').val()
 
+                    var  element=$(this)
+                    var url = "{{ route('status.update',['id'=>':id'])  }}";
                     url = url.replace(':id', id)
 
+                    $.ajax({
+                        type: "get",
+                        url: url,
+                        data:{
+                          'note':note,
+                        },
 
+                        beforeSend: function(response) {
 
-                            $.ajax({
-                                type: "get",
-                                url: url,
+                            button.parent().find('.indicator-progress').show();
+                            button.parent().find('.indicator-label').hide()
+                            button.parent().find('#user_submit').prop("disabled", true);
 
-                                beforeSend: function(response) {
+                        },
+                        success: function(result) {
+                            button.parent().find('.indicator-progress').hide();
+                            button.parent().find('.indicator-label').show()
+                            button.hide();
+                            $("#modal_acceptable").modal("hide");
+                            button.parent().find("#done_accepted").show();
+                            button.parent().append(`<span id="done_accepted" class="text-success position-absolute  end-0 ytyryrt" > <i class="fa fa-check text-success"></i> تمت الموافقة</span>`)
+                        },
+                        error: function(result) {
 
-                                    element.parent().find('.indicator-progress').show();
-                                    element.parent().find('.indicator-label').hide()
-                                    element.parent().find('#user_submit').prop("disabled", true);
-
-                                },
-                                success: function(result) {
-                                    element.parent().find('.indicator-progress').hide();
-                                    element.parent().find('.indicator-label').show()
-                                    element.parent().find('#accepted').hide();
-                                    element.parent().find("#done_accepted").show();
-
-                                    element.parent().append(`<span id="done_accepted" class="text-success position-absolute  end-0 ytyryrt" > <i class="fa fa-check text-success"></i> تمت الموافقة</span>`)
-
-
-                                },
-                                error: function(result) {
-
-                                }
-                            });
-
-
-
-
-
-
+                        }
+                    });
                 })
+
             </script>
 
 @endpush

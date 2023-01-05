@@ -154,7 +154,7 @@
                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                title=""></i>
                         </label>
-                        <select class="form-control form-control-solid"  name="status" >
+                        <select class="form-control form-control-solid"  name="status_show" >
 
                                  <option value="private">خاص</option>
                                  <option value="published">مرفوع</option>

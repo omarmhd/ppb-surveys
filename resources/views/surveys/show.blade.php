@@ -1,5 +1,5 @@
 @extends('layouts.app_admin')
-@section('title','الإستبيانات')
+@section('title','النماذج')
 @section('toolbar.title','لوحة التحكم')
 @section('breadcrumb')
     <!--begin::Item-->
@@ -75,9 +75,6 @@
 
 
                                     </td>
-
-
-
 
                           @foreach($section->questions as $key=>$question)
 

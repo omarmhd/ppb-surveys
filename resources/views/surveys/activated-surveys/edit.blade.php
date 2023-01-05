@@ -94,7 +94,7 @@
                                                 {{--                                                   title=""></i>--}}
                                             </label>
 
-                                            <select class="form-control    form-control-solid"  id="select-emp" name="employee_id" >
+                                            <select class="form-control    form-control-solid"  id="select-emp" name="employee_id">
 
                                                 @foreach($users as $user)
                                                     <option {{$activated_survey->employee_id==$user->id?"selected":""}}  value="{{$user->id}}">{{$user->full_name}}</option>
@@ -126,19 +126,17 @@
                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                title=""></i>
                         </label>
-                        <select class="form-control form-control-solid"  name="status" >
+                        <select class="form-control form-control-solid"  name="status_show" >
 
                                  <option value="private">خاص</option>
                                  <option value="published">مرفوع</option>
-
-
 
                         </select>
                     </div>
                     <div class="col-md-4">
 
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required"> حالة التقيم</span>
+                            <span class="required">حالة النموذج</span>
                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                title=""></i>
                         </label>

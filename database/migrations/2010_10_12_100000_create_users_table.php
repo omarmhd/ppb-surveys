@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string("full_name");
             $table->string("email")->nullable();
-            $table->enum('role',['employee','evaluator','administrator']);
+            $table->enum('role',['employee','evaluator','administrator','hr']);
 //            $table->foreignId('manager_id')->nullable()->constrained("users")->references("id");
 //            $table->foreignId('manager_id')->nullable()->constrained("users")->references("id");
             $table->timestamp('email_verified_at')->nullable();

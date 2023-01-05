@@ -69,16 +69,14 @@
                     <thead>
                     <tr class="fw-bolder  bg-secondary text-muted ">
 
-
-
                         <th class="min-w-150px text-center" >الإسم المستخدم</th>
                         <th class="min-w-120px text-center">الاسم رباعي</th>
                         <th class="min-w-120px text-center">البريد الإلكتروني</th>
                         <th class="min-w-120px text-center">القسم</th>
                         <th class="min-w-125px text-center">الدور</th>
-
                         <th class="min-w-125px text-center">تاريخ الإضافة</th>
                         <th class="min-w-15px text-center">الإجراءات</th>
+                    
                     </tr>
 
 

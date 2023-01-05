@@ -30,7 +30,6 @@
         <!--begin::Body-->
         <div class="card-body py-3">
             <!--begin::Table container-->
-
             <form id="search_form" class="form" action="javascript:void(0)">
                 <!--begin::Heading-->
                 <div class="mt-10 text-start mb-15 fs-6">
@@ -53,7 +52,7 @@
                         <select class="form-control form-control-solid"  id="kt_select2_3" name="employee_id">
                             <option value=""  selected></option>
 
-                        @foreach($employees as $employee)
+                            @foreach($employees as $employee)
                                 <option  value="{{$employee->id}}">{{$employee->full_name}}</option>
                             @endforeach
                         </select>
@@ -69,7 +68,7 @@
                         <select class="form-control form-control-solid"  id="kt_select2_3" name="evaluator_id">
                             <option value=""  selected></option>
 
-                        @foreach($evaluators as $evaluator)
+                            @foreach($evaluators as $evaluator)
                                 <option  value="{{$evaluator->id}}">{{$evaluator->full_name}}</option>
                             @endforeach
                         </select>
@@ -108,6 +107,7 @@
                 </div>
                 <!--end::Actions-->
             </form>
+
             <div class="table-responsive">
 
             <!--begin::Table-->
@@ -221,6 +221,6 @@
         });
     </script>
 
-    @include('surveys.activated-surveys._datatable')
+    @include('surveys.activated-surveys.approval._datatable')
     @include("parts.sweetDelete", ['route' => route('activated-surveys.destroy', ['activated_survey' => ':id'])])
 @endpush

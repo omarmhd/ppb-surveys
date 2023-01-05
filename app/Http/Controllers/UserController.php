@@ -23,7 +23,9 @@ class UserController extends Controller
                 ->addIndexColumn()
 
                 ->addColumn('action', function ($data) {
-                    $actionBtn = '<a href="' . route('users.edit', $data) . '" class="edit btn btn-primary "><i class="fa fa-pen"></i></a> <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-danger "><i class="fa fa-trash"></i></a>';
+                    $actionBtn = '<a href="' . route('users.edit', $data) . '" class="edit btn btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
+                                    <a href="' . route('users.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i></a>
+                                    <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon   btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>';
                     return $actionBtn;
                 })
                 ->rawColumns([ 'action'])
@@ -71,33 +73,13 @@ class UserController extends Controller
 
     public function  show($id){
 
-        $surveysCurrant=CurrantSurvey::where('employee_id',$id)->where('is_evaluated',1)->where('status','published')->where('is_open',1);
 
-        $surveyLatest=$surveysCurrant->latest()->first();
-
-        if($surveysCurrant){
+        $surveysCurrantBefor=CurrantSurvey::with('survey')->where('employee_id',$id)->whereIN('status',['1','2','3','4','5'])->where('status_show','published')->where('is_open',"1");
 
 
-        $surveysCurrant=CurrantSurvey::where(['employee_id'=>$id,'is_evaluated'=>1]);
-        $countsurveys=$surveysCurrant->count();
 
-            $avgScore=$countsurveys>0?($surveysCurrant->sum("score")/$surveysCurrant->count("is_evaluated")):0  ;
+        $surveyLatest=$surveysCurrantBefor->latest()->first();
 
-
-        $surveys =$surveysCurrant->paginate(4);
-//        $sectionResult=Result::where("employee_id",$id)->get()->groupBy('employee_id');
-
-        $user=User::findOrFail($id);
-        return view("users.show",compact('surveyLatest','user','surveys','avgScore'));
-        }
-
-        return redirect()->back()->with('error',"لا يوجد تقيمات لهذا الحساب في الوقت الحالي ");
-    }
-
-    public function showMyEvaluation(){
-
-        $id=auth()->user()->id;
-        $surveysCurrantBefor=CurrantSurvey::with('survey')->where('employee_id',$id)->where('is_evaluated',"1")->where('status','published');
 
         if( $surveysCurrantBefor->count()>0){
 
@@ -109,7 +91,33 @@ class UserController extends Controller
             $avgScore=$countsurveys>0?($surveysCurrant->sum("score")/$surveysCurrant->count("is_evaluated")):0  ;
 
 
-            $surveys =$surveysCurrantBefor->paginate(4);
+            $surveys =$surveysCurrantBefor->paginate(6);
+
+//        $sectionResult=Result::where("employee_id",$id)->get()->groupBy('employee_id');
+
+            $user=User::findOrFail($id);
+            return view("users.show",compact('surveyLatest','user','surveys','avgScore'));
+        }
+
+        return redirect()->back()->with('error',"لا يوجد تقيمات لهذا الحساب في الوقت الحالي ");
+    }
+
+    public function showMyEvaluation(){
+
+        $id=auth()->user()->id;
+        $surveysCurrantBefor=CurrantSurvey::with('survey')->where('employee_id',$id)->whereIN('status',['1','2','3','4','5'])->where('status_show','published')->where('is_open',"1");
+
+        if( $surveysCurrantBefor->count()>0){
+
+            $surveyLatest=$surveysCurrantBefor->latest()->first();
+
+            $surveysCurrant=$surveysCurrantBefor->get();
+            $countsurveys=$surveysCurrant->count();
+
+            $avgScore=$countsurveys>0?($surveysCurrant->sum("score")/$surveysCurrant->count("is_evaluated")):0  ;
+
+
+            $surveys =$surveysCurrantBefor->paginate(6);
 
 //        $sectionResult=Result::where("employee_id",$id)->get()->groupBy('employee_id');
 
@@ -124,7 +132,6 @@ class UserController extends Controller
 
 
     public  function edit(User $user){
-
         return view("users.edit",compact('user'));
     }
 

@@ -1,30 +1,28 @@
 @extends('layouts.app_admin')
-@section('title','الإستبيانات')
-@section('toolbar.title','لوحة التحكم')
-@section('breadcrumb')
-    <!--begin::Item-->
-    <li class="breadcrumb-item">
-        <span class="bullet bg-gray-400 w-5px h-2px"></span>
-    </li>
 
-    <li class="breadcrumb-item text-muted">@yield('title')</li>
-@endsection
+
+
 
 @section('content')
+
+
     <!--begin::Form Widget 13-->
     <div class="card">
+        <h3 class="text-center py-2">{{$survey->survey->title}}  ({{$survey->survey->details}} )</h3>
         <!--begin::Body-->
         <div class="card-body py-1">
             <!--begin:Form-->
             <!--begin::Heading-->
             <div class="mb-13 mt-5 text-start">
                 <!--begin::Title-->
-                <h1 class="mb-3"> استبانة تقيم الموظف <span style="color:red">{{$survey->employee->full_name}}</span> </h1>
+                <h3 class="mb-3">   تقيم الموظف :<span  class="text-muted fs-2 text-decoration-underline" style="color:red">{{$survey->employee->full_name}}</span> </h3>
+                <h3 class="mb-3">   المسؤول المقيم :<span  class="text-muted fs-2 text-decoration-underline" style="color:red">{{$survey->evaluator->full_name}}</span> </h3>
+
                 <!--end::Title-->
                 <!--begin::Description-->
-                <div class="text-gray-400 fw-bold fs-5">
-                    <a href="{{route('activated-surveys.index')}}" class="fw-bolder link-primary">استبانات التقيم الأخرى</a>.
-                </div>
+{{--                <div class="text-gray-400 fw-bold fs-5">--}}
+{{--                    <a href="{{route('activated-surveys.index')}}" class="fw-bolder link-primary">نماذج التقيم الأخرى</a>.--}}
+{{--                </div>--}}
                 <!--end::Description-->
             </div>
             <form id="form1" class="form" method="POST" action="javascript:void(0)">
@@ -42,18 +40,18 @@
                         <tr class="fw-bolder  bg-secondary text-muted " >
 
                             <th class="min-w-100px text-center align-middle" rowspan="2">المجال</th>
-
-                            <th class="min-w-200px text-center align-middle" rowspan="2">معيار التقيم</th>
+                            <th class="min-w-10px text-center align-middle" rowspan="2">م</th>
+                            <th class="min-w-200px text-center align-middle" rowspan="2">العنصر</th>
 
                             <th colspan="5">
-                                الدرجة المناظرة للتقدير
+                                الدرجة
                             </th>
 
                         </tr>
                         <tr>
 
                             @foreach($points as $point)
-                                <th class="min-w-20px text-center ">{{$point->name}}</th>
+                                <th class="min-w-20px text-center fs-3">{{$point->score}}</th>
                             @endforeach
 
                         </tr>
@@ -78,6 +76,8 @@
                                         {{$section->section->title}}
 
 
+
+
                                     </td>
 
 
@@ -93,6 +93,7 @@
 
 
                              @endif
+                               <td>{{$key+1}} </td>
                                 <td>{{$result->question_title}} </td>
 
                                @foreach($points as $point)
@@ -126,18 +127,16 @@
                 </div>
                     </div>
 
-                    <div class="col-md-6 fv-row">
+                    <div class="col-md-12 fv-row">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                             <span class=""> الملاحظات إن وجدت</span>
                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                title="تظهر هذه الملاحظات للموظف كتغذية راجعة "></i>
                         </label>
                         <!--end::Label-->
-                        <textarea id=""  class="form-control form-control-solid" name="notes" rows="5"
-                               placeholder="الملاحظات"
-                                  name="title"/>
-
-                        </textarea>
+                        <textarea id=""  class="form-control form-control-solid" name="evaluator_notes" rows="5" cols="11"
+                               placeholder="تظهر هذه الملاحظات كتغذية راجعة للموظف"
+                                  name="title"/></textarea>
 
                     </div>
                 </div>

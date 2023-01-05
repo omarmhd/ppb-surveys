@@ -40,6 +40,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/localization/messages_ar.min.js"></script>
 
+<script>
+    var url = window.location;
+    var element = $('.menu-item a').filter(function() {
+        return this.href == url  }).addClass('active');
+
+</script>
+
 
 {{--<script>--}}
 {{--    flatpickr.localize(flatpickr.l10ns.ar);--}}

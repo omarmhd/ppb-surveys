@@ -19,12 +19,12 @@ class CreateCurrantSurveysTable extends Migration
             $table->foreignId('employee_id')->constrained("users")->references("id");
             $table->foreignId('evaluator_id')->constrained("users")->references("id");
             $table->string('version',20);
-            $table->enum('status',['private','published'])->default('private');
+            $table->enum('status_show',['private','published'])->default('private');
             $table->enum("is_open",['0','1'])->default(0);
             $table->enum("is_evaluated",['0','1'])->default(0);
-            $table->enum("is_accepted",['0','1'])->default(0);
+            $table->enum("status",['0','1','2','4'])->default('0');//1 تم التقيم ,2 تم الموافقة على التقيم من قبل الموظف + ملاحظة,3المسؤول العام اعتمد التقيم  , 4 اعادة التقيم
             $table->integer("score")->default(0);
-//            $table->enum("is_accepted",['0','1'])->default(0);
+//          $table->enum("is_accepted",['0','1'])->default(0);
             $table->text("notes")->nullable();
             $table->softDeletes();
 

@@ -10,11 +10,21 @@ class CurrantSurvey extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    protected $casts = [
+        'created_at'  => 'date:Y-m-d',
+        'updated_at'=> 'date:Y-m-d',
 
+    ];
+    protected $appends = ['status_print'];
 
     protected $guarded=['_token'];
 
-        public function results(){
+    public function department(){
+        return $this->belongsTo(Department::class)->withDefault();
+    }
+
+
+    public function results(){
 
             return $this->hasMany(Result::class);
 
@@ -33,6 +43,32 @@ class CurrantSurvey extends Model
     public function evaluator(){
 
         return $this->belongsTo(User::class,'evaluator_id');
+
+    }
+    public function getStatusPrintAttribute()
+    {
+
+        $status=$this->status;
+
+        switch ($status) {
+            case "0":
+                return "نموذج جديد";
+                break;
+            case "1":
+                return "تم التقيم";
+                break;
+            case "2":
+                return "وافق الموظف";
+                break;
+            case "3":
+                return "تم الاعتماد";
+                break;
+            case "4":
+                return "إعادة التقيم";
+                break;
+        }
+
+
 
     }
 

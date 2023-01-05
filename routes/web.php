@@ -29,33 +29,46 @@ route::group(['middleware'=>'auth'],function (){
     Route::resource("/sections",\App\Http\Controllers\SectionController::class);
     Route::post("/question/{section}",[\App\Http\Controllers\SectionController::class,'storeQuestion'])->name("question.store");
 
+
+    Route::resource("/surveys",\App\Http\Controllers\SurveyController::class);
+
+  /*start ::::::::::::::::activated surverys*/
+
+    //:show pages status
+    Route::get("activated-surveys/newIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'newIndex'])->name('activated-surveys.newIndex');
+    Route::get("activated-surveys/evaluatedIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'evaluatedIndex'])->name('activated-surveys.evaluatedIndex');
+    Route::get("activated-surveys/acceptedIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'acceptedIndex'])->name('activated-surveys.acceptedIndex');
+    Route::get("activated-surveys/approvalIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'approvalIndex'])->name('activated-surveys.approvalIndex');
+    Route::get("activated-surveys/returnIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'returnIndex'])->name('activated-surveys.returnIndex');
+
+    //:all activated survey
+    Route::resource('activated-surveys',\App\Http\Controllers\ActivatedSurveyController::class);
+    Route::put("activated-surveys/evaluation/{activated_survey}",[\App\Http\Controllers\ActivatedSurveyController::class,'evaluation'])->name('evaluation.update');
+
+    //:change status
+    Route::get("activated-surveys/{type?}/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'updateStatus'])->name('status.update');
+
+//    Route::get("activated-surveys/employee-accepted/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'updateAccepted'])->name('accepted.update');
+    Route::get("activated-surveys/approval/show/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'indexApprovalPage'])->name('approval.show');
+
+    /*end ::::::::::::::::activated surverys*/
+
+
+    //Route::post('/employee',[\App\Http\Controllers\EmployeeController::class,'store'])->name('employee.store');
+
+
+    Route::resource("/users",\App\Http\Controllers\UserController::class);
+    Route::get('show-my-evaluation',[\App\Http\Controllers\UserController::class,'showMyEvaluation'])->name('showMyEvaluation');
+
+    Route::resource("/sections",\App\Http\Controllers\SectionController::class);
+    Route::post("/question/{section}",[\App\Http\Controllers\SectionController::class,'storeQuestion'])->name("question.store");
+
     Route::resource("/surveys",\App\Http\Controllers\SurveyController::class);
 
 
     Route::resource('activated-surveys',\App\Http\Controllers\ActivatedSurveyController::class);
 
-    Route::get("activated-surveys/accepted/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'updateAccepted'])->name('accepted.update');
 
-
-
-
-
-//Route::post('/employee',[\App\Http\Controllers\EmployeeController::class,'store'])->name('employee.store');
-Route::resource("/employee",EmployeeController::class);
-Route::resource("/users",\App\Http\Controllers\UserController::class);
-
-Route::resource("/sections",\App\Http\Controllers\SectionController::class);
-Route::post("/question/{section}",[\App\Http\Controllers\SectionController::class,'storeQuestion'])->name("question.store");
-
-Route::resource("/surveys",\App\Http\Controllers\SurveyController::class);
-
-
-Route::resource('activated-surveys',\App\Http\Controllers\ActivatedSurveyController::class);
-Route::put("activated-surveys/evaluation/{activated_survey}",[\App\Http\Controllers\ActivatedSurveyController::class,'evaluation'])->name('evaluation.update');
-
-Route::get('show-my-evaluation',[\App\Http\Controllers\UserController::class,'showMyEvaluation'])->name('showMyEvaluation');
-
-Route::get("activated-surveys/accepted/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'updateAccepted'])->name('accepted.update');
 
 });
 //Route::resource("/employee",EmployeeController::class);

@@ -11,72 +11,204 @@
 @endsection
 @section('content')
     <!--begin::Form Widget 13-->
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+    <div class="row gy-5 g-xl-10">
         <!--begin::Col-->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-            <!--begin::Card widget 20-->
-            <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end h-md-50 mb-5 mb-xl-10" style="background-color: #F1416C;background-image:url('/metronic8/demo1/assets/media/patterns/vector-1.png')">
-                <!--begin::Header-->
-                <div class="card-header pt-5">
-                    <!--begin::Title-->
-                    <div class="card-title d-flex flex-column">
+        <div class="col-sm-6 col-xl-2 mb-xl-10">
+            <!--begin::Card widget 2-->
+            <div class="card h-lg-100">
+                <!--begin::Body-->
+                <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                    <!--begin::Icon-->
+                    <div class="m-0">
+                        <!--begin::Svg Icon | path: icons/duotune/maps/map004.svg-->
 
+                        <i class= "fa fa-user fs-2"></i>
 
-                        <!--begin::Amount-->
-                        <span class="fs-2hx fw-bold text-white me-2 lh-1 ls-n2"></span>
-                        <!--end::Amount-->
-                        <!--begin::Subtitle-->
-                        <span class="text-white opacity-75 pt-1 fw-semibold fs-6">عدد النماذج التي تم تقيمها</span>
-                        <!--end::Subtitle-->
+                        <!--end::Svg Icon-->
                     </div>
-                    <!--end::Title-->
-                </div>
-                <!--end::Header-->
-                <!--begin::Card body-->
-                <div class="card-body d-flex align-items-end pt-0">
-                    <!--begin::Progress-->
-                    <div class="d-flex align-items-center flex-column mt-3 w-100">
-{{--                        <div class="d-flex justify-content-between fw-bold fs-6 text-white opacity-75 w-100 mt-auto mb-2">--}}
-{{--                            <span>متوسط أداء الموظفين خلال العام الحالي</span>--}}
-{{--                            <span>72%</span>--}}
-{{--                        </div>--}}
-                        <div class="h-8px mx-3 w-100 bg-white bg-opacity-50 rounded">
-                            <div class="bg-white rounded h-8px" role="progressbar" style="width: 72%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    <!--end::Icon-->
+                    <!--begin::Section-->
+                    <div class="d-flex flex-column my-7">
+                        <!--begin::Number-->
+                        <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">{{$users_count}}</span>
+                        <!--end::Number-->
+                        <!--begin::Follower-->
+                        <div class="m-0">
+                            <span class="fw-semibold fs-6 text-gray-400">عدد المستخدمين</span>
                         </div>
+                        <!--end::Follower-->
                     </div>
-                    <!--end::Progress-->
+                    <!--end::Section-->
+                    <!--begin::Badge-->
+                    <span class="">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+
+                        <!--end::Svg Icon--></span>
+                    <!--end::Badge-->
                 </div>
-                <!--end::Card body-->
+                <!--end::Body-->
             </div>
-            <!--end::Card widget 20-->
-            <!--begin::Card widget 7-->
-            <div class="card card-flush h-md-50 mb-5 mb-xl-10">
-                <!--begin::Header-->
-                <div class="card-header pt-5">
-                    <!--begin::Title-->
-                    <div class="card-title d-flex flex-column">
-                        <!--begin::Amount-->
-                        <span class="fs-2hx fw-bold text-dark me-2 lh-1 ls-n2">{{$evaluator_count}}</span>
-                        <!--end::Amount-->
-                        <!--begin::Subtitle-->
-                        <span class="text-gray-400 pt-1 fw-semibold fs-6">عدد المقيمين</span>
-                        <!--end::Subtitle-->
+            <!--end::Card widget 2-->
+        </div>
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-sm-6 col-xl-2 mb-xl-10">
+            <!--begin::Card widget 2-->
+            <div class="card h-lg-100">
+                <!--begin::Body-->
+                <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                    <!--begin::Icon-->
+                    <div class="m-0">
+                        <!--begin::Svg Icon | path: icons/duotune/graphs/gra001.svg-->
+                        <span class="svg-icon svg-icon-2hx svg-icon-gray-600">
+															<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																<path opacity="0.3" d="M14 3V21H10V3C10 2.4 10.4 2 11 2H13C13.6 2 14 2.4 14 3ZM7 14H5C4.4 14 4 14.4 4 15V21H8V15C8 14.4 7.6 14 7 14Z" fill="currentColor"></path>
+																<path d="M21 20H20V8C20 7.4 19.6 7 19 7H17C16.4 7 16 7.4 16 8V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z" fill="currentColor"></path>
+															</svg>
+														</span>
+                        <!--end::Svg Icon-->
                     </div>
-                    <!--end::Title-->
+                    <!--end::Icon-->
+                    <!--begin::Section-->
+                    <div class="d-flex flex-column my-7">
+                        <!--begin::Number-->
+                        <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">{{$currant_count}}</span>
+                        <!--end::Number-->
+                        <!--begin::Follower-->
+                        <div class="m-0">
+                            <span class="fw-semibold fs-6 text-gray-400">عدد التقيمات المطلوبة</span>
+                        </div>
+                        <!--end::Follower-->
+                    </div>
+                    <!--end::Section-->
+                    <!--begin::Badge-->
+                    <span class="">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+										</span>
+                    <!--end::Badge-->
                 </div>
-                <!--end::Header-->
-                <!--begin::Card body-->
-                <div class="card-body d-flex flex-column justify-content-end pe-0">
-                    <!--begin::Title-->
-
-                    <!--end::Title-->
-                    <!--begin::Users group-->
-
-                    <!--end::Users group-->
-                </div>
-                <!--end::Card body-->
+                <!--end::Body-->
             </div>
-            <!--end::Card widget 7-->
+            <!--end::Card widget 2-->
+        </div>
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-sm-6 col-xl-2 mb-xl-10">
+            <!--begin::Card widget 2-->
+            <div class="card h-lg-100">
+                <!--begin::Body-->
+                <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                    <!--begin::Icon-->
+                    <div class="m-0">
+                        <!--begin::Svg Icon | path: icons/duotune/abstract/abs048.svg-->
+                        <span class="svg-icon svg-icon-2hx svg-icon-gray-600">
+												                          <i class="fas fa-user-tie fs-2"></i>
+														</span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Icon-->
+                    <!--begin::Section-->
+                    <div class="d-flex flex-column my-7">
+                        <!--begin::Number-->
+                        <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">{{$employee_count}}</span>
+                        <!--end::Number-->
+                        <!--begin::Follower-->
+                        <div class="m-0">
+                            <span class="fw-semibold fs-6 text-gray-400">
+                                عدد الموظفين
+                            </span>
+                        </div>
+                        <!--end::Follower-->
+                    </div>
+                    <!--end::Section-->
+                    <!--begin::Badge-->
+                    <span class="">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
+									</span>
+                    <!--end::Badge-->
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Card widget 2-->
+        </div>
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-sm-6 col-xl-2 mb-xl-10">
+            <!--begin::Card widget 2-->
+            <div class="card h-lg-100">
+                <!--begin::Body-->
+                <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                    <!--begin::Icon-->
+                    <div class="m-0">
+                        <!--begin::Svg Icon | path: icons/duotune/maps/map002.svg-->
+                        <span class="svg-icon svg-icon-2hx svg-icon-gray-600">
+												                          <i class="fas fa-user-tie fs-2"></i>
+														</span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Icon-->
+                    <!--begin::Section-->
+                    <div class="d-flex flex-column my-7">
+                        <!--begin::Number-->
+                        <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">{{$evaluator_count}}</span>
+                        <!--end::Number-->
+                        <!--begin::Follower-->
+                        <div class="m-0">
+                            <span class="fw-semibold fs-6 text-gray-400">عدد المقيمين</span>
+                        </div>
+                        <!--end::Follower-->
+                    </div>
+                    <!--end::Section-->
+                    <!--begin::Badge-->
+                    <span class="">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr066.svg-->
+												</span>
+                    <!--end::Badge-->
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Card widget 2-->
+        </div>
+        <!--end::Col-->
+        <!--begin::Col-->
+        <div class="col-sm-6 col-xl-2 mb-5 mb-xl-10">
+            <!--begin::Card widget 2-->
+            <div class="card h-lg-100">
+                <!--begin::Body-->
+                <div class="card-body d-flex justify-content-between align-items-start flex-column">
+                    <!--begin::Icon-->
+                    <div class="m-0">
+                        <!--begin::Svg Icon | path: icons/duotune/abstract/abs037.svg-->
+                        <span class="svg-icon svg-icon-2hx svg-icon-gray-600">
+															<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																<path opacity="0.3" d="M2.10001 10C3.00001 5.6 6.69998 2.3 11.2 2L8.79999 4.39999L11.1 7C9.60001 7.3 8.30001 8.19999 7.60001 9.59999L4.5 12.4L2.10001 10ZM19.3 11.5L16.4 14C15.7 15.5 14.4 16.6 12.7 16.9L15 19.5L12.6 21.9C17.1 21.6 20.8 18.2 21.7 13.9L19.3 11.5Z" fill="currentColor"></path>
+																<path d="M13.8 2.09998C18.2 2.99998 21.5 6.69998 21.8 11.2L19.4 8.79997L16.8 11C16.5 9.39998 15.5 8.09998 14 7.39998L11.4 4.39998L13.8 2.09998ZM12.3 19.4L9.69998 16.4C8.29998 15.7 7.3 14.4 7 12.8L4.39999 15.1L2 12.7C2.3 17.2 5.7 20.9 10 21.8L12.3 19.4Z" fill="currentColor"></path>
+															</svg>
+														</span>
+                        <!--end::Svg Icon-->
+                    </div>
+                    <!--end::Icon-->
+                    <!--begin::Section-->
+                    <div class="d-flex flex-column my-7">
+                        <!--begin::Number-->
+                        <span class="fw-semibold fs-3x text-gray-800 lh-1 ls-n2">{{$survey_count}}</span>
+                        <!--end::Number-->
+                        <!--begin::Follower-->
+                        <div class="m-0">
+                            <span class="fw-semibold fs-6 text-gray-400">عدد النماذج</span>
+                        </div>
+                        <!--end::Follower-->
+                    </div>
+                    <!--end::Section-->
+                    <!--begin::Badge-->
+                    <span class="">
+													<!--begin::Svg Icon | path: icons/duotune/arrows/arr065.svg-->
+										</span>
+                    <!--end::Badge-->
+                </div>
+                <!--end::Body-->
+            </div>
+            <!--end::Card widget 2-->
         </div>
         <!--end::Col-->
         <!--begin::Col-->
