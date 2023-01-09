@@ -52,7 +52,7 @@ class CurrantSurvey extends Model
 
         switch ($status) {
             case "0":
-                return "نموذج جديد";
+                return " نموذج جديد ";
                 break;
             case "1":
                 return "تم التقيم";

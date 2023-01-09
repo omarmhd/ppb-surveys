@@ -19,7 +19,7 @@
             <!--begin::Heading-->
             <div class="mb-13 mt-5 text-start">
                 <!--begin::Title-->
-                <h1 class="mb-3"><i class="fa fa-search fs-1"></i>معاينة استبانة :  {{$survey->title}}  </h1>
+                <h1 class="mb-3"><i class="fa fa-search fs-1"></i> معاينة النموذج :   <span  class="text-muted fs-2 text-decoration-underline" style="color:red">{{$survey->title}} </span>  </h1>
                 <!--end::Title-->
                 <!--begin::Description-->
                 <div class="text-gray-400 fw-bold fs-5">
@@ -42,18 +42,19 @@
                         <tr class="fw-bolder  bg-secondary text-muted " >
 
                             <th class="min-w-40px text-center align-middle" rowspan="2">المجال</th>
+                            <th class="min-w-10px text-center align-middle" rowspan="2">م</th>
 
-                            <th class="min-w-300px text-center align-middle" rowspan="2">معيار التقيم</th>
+                            <th class="min-w-300px text-center align-middle" rowspan="2">العنصر</th>
 
                             <th  class="min-w-300px text-center align-middle" colspan="5">
-                                الدرجة المناظرة للتقدير
+                                الدرجة
                             </th>
 
                         </tr>
                         <tr>
 
                             @foreach($points as $point)
-                                <th class="min-w-20px text-center ">{{$point->name}}</th>
+                                <th class="min-w-20px text-center ">{{$point->score}}</th>
                             @endforeach
 
                         </tr>
@@ -76,6 +77,7 @@
 
                                     </td>
 
+
                           @foreach($section->questions as $key=>$question)
 
 
@@ -86,6 +88,7 @@
 
 
                              @endif
+                                     <td class="">{{$key+1}}</td>
                                 <td>{{$question->name}} </td>
 
                                @foreach($points as $point)
@@ -119,7 +122,7 @@
                 </div>
                     </div>
 
-                    <div class="col-md-6 fv-row">
+                    <div class="col-md-12 fv-row">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
                             <span class=""> الملاحظات إن وجدت</span>
                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"

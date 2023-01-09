@@ -17,6 +17,7 @@
 
             },
             columns: [
+                { data: 'DT_RowIndex', 'orderable': true, 'searchable': false },
 
                 {data: 'title', name: 'name'},
                 {data: 'description', name: 'full_name'},

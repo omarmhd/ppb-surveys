@@ -68,6 +68,7 @@
                     <tr class="fw-bolder  bg-secondary text-muted ">
 
 
+                        <th class="min-w-10px text-center" >#</th>
 
                         <th class="min-w-150px text-center" >العنوان</th>
                         <th class="min-w-120px text-center">التفاصيل</th>

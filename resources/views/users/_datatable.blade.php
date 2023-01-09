@@ -17,6 +17,10 @@
             },
             columns: [
 
+
+
+                { data: 'DT_RowIndex', 'orderable': true, 'searchable': false },
+
                 {data: 'name', name: 'name'},
                 {data: 'full_name', name: 'full_name'},
                 {data: 'email', name: 'email'},

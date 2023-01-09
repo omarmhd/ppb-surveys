@@ -36,6 +36,7 @@
 
             columns: [
 
+                { data: 'DT_RowIndex', 'orderable': true, 'searchable': false },
 
                 {data: 'survey_id', name: 'survey_id'},
                 {data: 'employee_id', name: 'employee_id'},
