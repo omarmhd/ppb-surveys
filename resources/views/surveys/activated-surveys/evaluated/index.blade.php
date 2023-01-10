@@ -1,5 +1,5 @@
 @extends('layouts.app_admin')
-@section('title','التقيمات ')
+@section('title','التقيمات المرسلة ')
 @section('toolbar.title','لوحة التحكم')
 @section('breadcrumb')
     <!--begin::Item-->

@@ -24,7 +24,7 @@
         <!--begin::Card header-->
 
 
-        <h1 class="mb-3">@yield('title')</h1>
+   
 
         <!--end::Card header-->
         <!--begin::Body-->
