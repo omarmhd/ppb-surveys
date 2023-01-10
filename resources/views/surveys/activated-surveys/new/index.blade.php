@@ -118,6 +118,7 @@
                     <tr class="fw-bolder  bg-secondary text-muted ">
 
 
+                        <th class="min-w-10px text-center" >#</th>
 
                         <th class="min-w-150px text-center" >اسم النموذج</th>
                         <th class="min-w-20px text-center" >الموظف</th>

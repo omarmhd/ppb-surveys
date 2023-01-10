@@ -20,17 +20,21 @@ use Yajra\DataTables\Facades\DataTables;
 class ActivatedSurveyController extends Controller
 {
 
-    public function dataTableSearch($date_from="",$date_to="",$employee_id="",$evaluator_id=""){
+    public function dataTableSearch($date_from="",$date_to="",$employee_id="",$evaluator_id="",$status=""){
 
         if (Gate::allows("evaluator") ) {
             if(($date_from and $date_to) or $employee_id  or $evaluator_id) {
 
 
-                $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->whereBetween('created_at', [$date_from, $date_to])->latest()->get();
+                $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->where("status",$status)->whereBetween('created_at', [$date_from, $date_to])->latest()->get();
             }else{
+                if($status!=""){
+                    $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->where("status", $status)->latest()->get();
 
-                $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->latest()->get();
+                }else {
 
+                    $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->latest()->get();
+                }
             }
 
 
@@ -40,10 +44,18 @@ class ActivatedSurveyController extends Controller
 
             if(($date_from and $date_to) or $employee_id  or $evaluator_id) {
 
-                $data = CurrantSurvey::whereBetween('created_at', [$date_from, $date_to])->orwhere('employee_id',$employee_id)->orwhere('evaluator_id',$evaluator_id)->latest()->get();
+                $data = CurrantSurvey::whereBetween('created_at', [$date_from, $date_to])->orwhere('employee_id',$employee_id)->orwhere('evaluator_id',$evaluator_id)->orwhere("status",$status)->latest()->get();
             }else{
 
-                $data = CurrantSurvey::latest()->get();
+                if($status!=""){
+                    $data = CurrantSurvey::where('status',$status)->latest()->get();
+
+                }else{
+                    $data = CurrantSurvey::latest()->get();
+                }
+
+
+
 
             }
 
@@ -129,7 +141,7 @@ class ActivatedSurveyController extends Controller
 
         if ($request->ajax()) {
 
-            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id);
+            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id,"0");
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -211,7 +223,7 @@ class ActivatedSurveyController extends Controller
         $employees = User::where("role", 'employee')->get();
         if ($request->ajax()) {
 
-            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id);
+            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id,"2");
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -285,7 +297,7 @@ class ActivatedSurveyController extends Controller
         $evaluators = User::where("role", 'evaluator')->get();
         $employees = User::where("role", 'employee')->get();
         if ($request->ajax()) {
-            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id);
+            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id,"1");
 
 
 
@@ -366,7 +378,7 @@ class ActivatedSurveyController extends Controller
         $employees = User::where("role", 'employee')->get();
 
         if ($request->ajax()) {
-            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id);
+            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id,"3");
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -441,7 +453,7 @@ class ActivatedSurveyController extends Controller
 
         if ($request->ajax()) {
 
-            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id);
+            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id,"4");
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -662,7 +674,7 @@ class ActivatedSurveyController extends Controller
 
         $cont_results = count($request->results ?? [""]);
 
-        if ($activated_survey->status == "1" or $activated_survey->status="3" ) {
+        if ($activated_survey->status == "1" or $activated_survey->status=="3" or $activated_survey->status=="2" ) {
             return response()->json(['success' => "error", 'message' => "نأسف!تم التقبم مسبقا لا يمكن التقيم مرة أخرى"]);
         }
 

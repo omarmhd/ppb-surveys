@@ -50,7 +50,7 @@
 
                     </tr>
                     <tr class="">
-                        <td class="min-w-10px text-right" style="width: 20%"> الحالة : <span class="text-muted">{{$survey->status_print}}</span>  </td>
+                        <td class="min-w-10px text-right" style="width: 20%"> الحالة : <span class="text-muted">{{$survey->status_print}} </span>  </td>
 
                         <td class="text-right" > النتيجة :<span class="text-muted"> {{$survey->score}} %</span>   </td>
 
@@ -72,6 +72,8 @@
                 </table>
                 <!--end::Table-->
             </div>
+            @if($survey->status!=='3')
+
             <div class="text-center mt-20 ms-20 mb-20">
                 <button type="submit" id="btn_approval" class="btn btn-primary" >
                     <span class="indicator-label"><i class="fa fa-save"></i> اعتماد نهائي </span>
@@ -81,6 +83,7 @@
                 <a href="{{route("status.update",['type'=>4,'id'=>$survey->id])}}" class="btn btn-secondary"> <i class="fa fa-"></i>طلب إعادة التقيم</a>
 
             </div>
+        @endif
             <!--end::Table container-->
         </div>
         <!--begin::Body-->

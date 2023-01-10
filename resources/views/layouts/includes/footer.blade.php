@@ -43,8 +43,12 @@
 <script>
     var url = window.location;
     var element = $('.menu-item a').filter(function() {
-        return this.href == url  }).addClass('active');
+        return this.href == url
+    }).addClass('active');
+    if (element.parent().parent().parent('.menu-accordion').length) {
 
+        element.parent().parent().parent('.menu-accordion').find(".menu-active-bg").show()
+    }
 </script>
 
 

@@ -21,7 +21,7 @@ class SectionController extends Controller
                 ->addIndexColumn()
 
                 ->addColumn('action', function ($data) {
-                    $actionBtn = '<a href="' . route('sections.edit', $data) . '" class="edit btn btn-primary btn-sm"><i class="fa fa-pen"></i> تعديل</a> <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-danger btn-sm"><i class="fa fa-trash"></i> حذف</a>';
+                    $actionBtn = '<a href="' . route('sections.edit', $data) . '" class="edit btn  btn-icon btn-light-primary me-2 mb-2 py-3"><i class="fa fa-pen"></i> </a> <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn  btn-icon btn-light-danger me-2 mb-2 py-3"><i class="fa fa-trash"></i> </a>';
                     return $actionBtn;
                 })
                 ->rawColumns([ 'action'])

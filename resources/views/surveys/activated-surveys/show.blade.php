@@ -33,8 +33,8 @@
                         <div class="table-responsive">
 
                     <!--begin::Table-->
-                    <table id="table_id"
-                           class="table   table-striped table-hover table-row-gray-300 align-middle gs-0 gy-3 border-1 text-center fs-7">
+                    <table id="table_id" border="1"
+                           class="table  table-bordered  table-striped table-hover table-row-gray-300 align-middle gs-0 gy-3 border-1 text-center fs-7">
                         <!--begin::Table head-->
                         <thead>
                         <tr class="fw-bolder  bg-secondary text-muted " >

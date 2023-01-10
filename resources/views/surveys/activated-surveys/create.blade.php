@@ -190,7 +190,7 @@
                         <span class="indicator-progress">الرجاء الإنتظار...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
-                    <a href="{{route("users.index")}}" class="btn btn-secondary"> <i class="fa fa-"></i>عودة</a>
+                    <a href="{{route('activated-surveys.index')}}" class="btn btn-secondary"> <i class="fa fa-"></i>عودة</a>
                     <button type="reset" id="user_cancel" class="btn btn-white me-3">إلغاء</button>
                 </div>
                 <!--end::Actions-->
