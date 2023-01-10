@@ -28,9 +28,13 @@ class ActivatedSurveyController extends Controller
 
                 $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->where("status",$status)->whereBetween('created_at', [$date_from, $date_to])->latest()->get();
             }else{
+                if($status!=""){
+                    $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->where("status", $status)->latest()->get();
 
-                $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->orwhere("status",$status)->latest()->get();
+                }else {
 
+                    $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->latest()->get();
+                }
             }
 
 

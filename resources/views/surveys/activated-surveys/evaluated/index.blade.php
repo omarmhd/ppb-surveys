@@ -121,7 +121,7 @@
                         <th class="min-w-150px text-center">اسم النموذج</th>
                         <th class="min-w-20px text-center">الموظف</th>
                         <th class="min-w-100px text-center">المقيم</th>
-                        <th class="min-w-10px text-center">ظهور التقيم للموظف</th>
+                        <th class="min-w-10px text-center">الحالة</th>
                         <th class="min-w-10px text-center">التاريخ</th>
                         <th class="min-w-10px text-center">درجة التقيم</th>
 

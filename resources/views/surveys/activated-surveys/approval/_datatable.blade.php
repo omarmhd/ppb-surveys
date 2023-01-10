@@ -36,14 +36,13 @@
 
             columns: [
 
+                { data: 'DT_RowIndex' },
 
                 {data: 'survey_id', name: 'survey_id'},
                 {data: 'employee_id', name: 'employee_id'},
                 {data: 'evaluator_id', name: 'evaluator_id'},
 
-                {data: 'status', name: 'status'},
-                {data: 'is_open', name: 'is_open'},
-                {data: 'is_evaluated', name: 'is_evaluated'},
+                {data: 'status_print', name: 'status_print'},
                 {data: 'score', name: 'score'},
 
                 {data: 'action', name: 'action', orderable: false, searchable: false},
