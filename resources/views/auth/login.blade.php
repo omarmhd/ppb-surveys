@@ -33,16 +33,16 @@ License: For each use you must have a valid license purchased only from above li
                     </a>
                     <!--end::Logo-->
                     <!--begin::Title-->
-                    <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: BLACK;"> نظام تقيم أداء الموظفين </h1>
+                    <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #6D7172;">  نظام تقيم أداء الموظفين </h1>
+                    <h3 class="" style="color: #6D7172;">  بنك الإنتاج الفلسطيني </h3>
                     <!--end::Title-->
                     <!--begin::Description-->
-                    <p class="fw-bold fs-2" style="color:BLACK ;">أهلا بكم
-                        <br />في نظام تقيم الأداء </p>
+
                     <!--end::Description-->
                 </div>
                 <!--end::Content-->
                 <!--begin::Illustration-->
-                <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(assets/media/illustrations/checkosut.png)"></div>
+                <div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url(images/preview.png)"></div>
                 <!--end::Illustration-->
             </div>
             <!--end::Wrapper-->

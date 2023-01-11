@@ -26,12 +26,12 @@
 @font-face {
     font-family: 'Cairo-Regular';
     font-style: normal;
-    src: "{{asset('assets/font/Cairo-Regular.ttf')}}";
+    src: url('assets/font/Cairo-Regular.ttf');
 
 }
 
 html, body{
-   
+
     font-family: Cairo-Regular,"sans-serif" !important;
 
 }</style>
