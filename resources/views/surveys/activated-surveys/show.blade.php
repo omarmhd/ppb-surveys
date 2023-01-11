@@ -48,6 +48,7 @@
                             </th>
 
                         </tr>
+
                         <tr>
 
                             @foreach($points as $point)
@@ -98,7 +99,7 @@
 
                                @foreach($points as $point)
 
-                                    <td><input type="radio" class="form-check-input radio-sm"  name="results[{{$result->id}}]" value="{{$point->score}}"></td>
+                                    <td><input type="radio" class="form-check-input radio-sm calc"  name="results[{{$result->id}}]" value="{{$point->score}}"></td>
 
                                 @endforeach
                                  </tr>
@@ -115,6 +116,7 @@
 
 
 
+
                         </tbody>
 
 
@@ -126,6 +128,7 @@
                     <!--end::Table-->
                 </div>
                     </div>
+                    <h4> درجة التقيم هي :  <span class="score text-danger">0</span></h4>
 
                     <div class="col-md-12 fv-row">
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
@@ -142,13 +145,15 @@
                 </div>
 
 
+
+
                 <div class="text-center mt-20 ms-20 mb-20">
                     <button type="submit" id="user_submit" class="btn btn-primary">
                         <span class="indicator-label"><i class="fa fa-save"></i> تسليم </span>
                         <span class="indicator-progress">الرجاء الإنتظار...
                             <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                     </button>
-                    <a href="{{route("users.index")}}" class="btn btn-secondary"> <i class="fa fa-"></i>عودة</a>
+                    <a href="{{route('activated-surveys.index')}}" class="btn btn-secondary"> <i class="fa fa-"></i>عودة</a>
 {{--                    <button type="reset" id="user_cancel" class="btn btn-white me-3">إلغاء</button>--}}
                 </div>
 
@@ -165,6 +170,24 @@
 
 @endsection
 @push('js')
+
+
+    <script>
+        function calcscore(){
+            var score = 0;
+            $(".calc:checked").each(function(){
+                score+=parseInt($(this).val(),10);
+            });
+            $(".score").text(score)
+            $("input[name=sum]").val(score)
+        }
+        $().ready(function(){
+            $(".calc").change(function(){
+                calcscore()
+
+            });
+        });
+    </script>
 
 
     @include("parts.sweetCreate", ['route' => route('evaluation.update',['activated_survey'=>$survey]),'method'=>'put'])
