@@ -24,7 +24,6 @@
                 {data: 'name', name: 'name'},
                 {data: 'full_name', name: 'full_name'},
                 {data: 'email', name: 'email'},
-                {data: 'department_name', name: 'department_name'},
                 {data: 'role', name: 'role'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},

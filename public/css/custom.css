@@ -50,15 +50,5 @@
 /*    border-width: 1px;*/
 /*}*/
 
-@font-face {
-    font-family: 'Cairo-Regular';
-    font-style: normal;
-    src: url('/font/Cairo-Regular.ttf');
 
-}
-
-html, body {
-    font-family: Cairo-Regular, Helvetica, "sans-serif";
-
-}
 
