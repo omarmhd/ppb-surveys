@@ -85,6 +85,29 @@ class ActivatedSurveyController extends Controller
         return $data;
     }
 
+    public function condtionBtn($data){
+        $actionBtn = '<a title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
+                      <a  title="تعديل البيانات" href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
+                        <a title="تفاصيل التقيم " href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
+                     <a  title="حذف التقيم " href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
+
+                     ';
+        if (Gate::allows("evaluator")) {
+            $actionBtn = '<a title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '" class="edit btn btn-primary btn-sm"><i class="fa fa-poll"></i>  تقيم</a>';
+            $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->latest()->get();
+        }elseif (Gate::allows("hr")){
+            $display=$data->evaluator_id==auth()->user()->id?"none":"";
+            $actionBtn = ' <a style="display:"'.$display.'" title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
+
+                        <a title="تفاصيل التقيم"  href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
+
+
+                     ';
+        }
+
+        return $actionBtn;
+    }
+
     public function index(Request $request)
     {
 
@@ -127,21 +150,7 @@ class ActivatedSurveyController extends Controller
                     return $prerc;
                 })->addColumn('action', function ($data) {
 
-                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
-                      <a href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
-                        <a href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
-                     <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
-
-                     ';
-                    if (Gate::allows("evaluator")) {
-                        $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn btn-primary btn-sm"><i class="fa fa-poll"></i>  تقيم</a>';
-                        $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->latest()->get();
-                    } else {
-                        $data = CurrantSurvey::latest()->get();
-
-                    }
-
-                    return $actionBtn;
+                    return $this->condtionBtn($data);
                 })
                 ->rawColumns(['action', 'status', 'is_open', 'is_evaluated', 'employee_id', 'survey_id'])
                 ->make(true);
@@ -191,18 +200,9 @@ class ActivatedSurveyController extends Controller
                     return $actionBtn;
                 })->addColumn('action', function ($data) {
 
-                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
-                      <a href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
-                        <a href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
-                     <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
-
-                     ';
-                    if (Gate::allows("evaluator")) {
-                        $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn btn-primary btn-sm"><i class="fa fa-poll"></i>  تقيم</a>';
-                    }
 
 
-                    return $actionBtn;
+                    return $this->condtionBtn($data);;
                 })
                 ->addColumn('employee_id', function ($data) {
 
@@ -271,13 +271,9 @@ class ActivatedSurveyController extends Controller
                     }
                     return $actionBtn;
                 })->addColumn('action', function ($data) {
-                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
-                      <a href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
-                        <a href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
-                     <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
 
-                     ';
-                    return $actionBtn;
+
+                    return $this->condtionBtn($data);
                 })
                 ->addColumn('employee_id', function ($data) {
 
@@ -368,19 +364,9 @@ class ActivatedSurveyController extends Controller
 
                     return $prerc;
                 })->addColumn('action', function ($data) {
-                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
-                      <a href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
-                        <a href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
-                     <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
-
-                     ';
-                    if (Gate::allows("evaluator")) {
-
-                        $actionBtn = "";
-                    }
 
 
-                    return $actionBtn;
+                    return $this->condtionBtn($data);
                 })
                 ->rawColumns(['status', 'is_open', 'is_evaluated', 'employee_id', 'survey_id', 'action'])
                 ->make(true);
@@ -427,13 +413,7 @@ class ActivatedSurveyController extends Controller
                     }
                     return $actionBtn;
                 })->addColumn('action', function ($data) {
-                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
-                      <a href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
-                        <a href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
-                     <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
-
-                     ';
-                    return $actionBtn;
+                    return $this->condtionBtn($data);
                 })
                 ->addColumn('employee_id', function ($data) {
 
@@ -499,13 +479,7 @@ class ActivatedSurveyController extends Controller
                     }
                     return $actionBtn;
                 })->addColumn('action', function ($data) {
-                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
-                      <a href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
-                        <a href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
-                     <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
-
-                     ';
-                    return $actionBtn;
+                    return $this->condtionBtn($data);
                 })
                 ->addColumn('employee_id', function ($data) {
 
@@ -575,18 +549,7 @@ class ActivatedSurveyController extends Controller
                     return $actionBtn;
                 })->addColumn('action', function ($data) {
 
-                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
-                      <a href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
-                        <a href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
-                     <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
-
-                     ';
-
-                    if (Gate::allows("evaluator")) {
-
-                        $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn btn-primary btn-sm"><i class="fa fa-poll"></i>  تقيم</a>';
-                    }
-                    return $actionBtn;
+                    return $this->condtionBtn($data);
                 })
                 ->addColumn('employee_id', function ($data) {
 
@@ -797,9 +760,9 @@ class ActivatedSurveyController extends Controller
             return back()->with("error", "خطأ في البيانات المدخلة");
         }
 
-       
+
         if ($type == '2' and $request->ajax()) {
-        
+
             $CurrantSurvey = CurrantSurvey::where(["id" => $id])->update(["status" => $type, 'employee_notes' => $request->note]);
             return response()->json(['success' => true]);
 

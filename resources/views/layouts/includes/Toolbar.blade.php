@@ -13,7 +13,7 @@
 
 
                 <li class="breadcrumb-item text-muted">
-                    <a href="/metronic8/demo1/../demo1/index.html" class="text-muted text-hover-primary">Home</a>
+                    <a href="" class="text-muted text-hover-primary">الرئيسية</a>
                 </li>
             @yield("breadcrumb")
 

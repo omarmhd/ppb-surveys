@@ -50,7 +50,7 @@ class UserController extends Controller
             'name'=>"required|unique:users,name",
             'full_name'=>'required',
             'email'=>"required|unique:users,email",
-            'role'=>'required|in:employee,evaluator,administrator',
+            'role'=>'required|in:employee,evaluator,administrator,hr',
             'password'=>'required|min:4'
         ]);
 
@@ -141,7 +141,7 @@ class UserController extends Controller
             'name'=>"required|unique:users,name,".$user->id,
             'full_name'=>'required',
             'email'=>"required|unique:users,email,".$user->id,
-            'role'=>'required|in:employee,evaluator,administrator',
+            'role'=>'required|in:employee,evaluator,administrator,hr',
 
         ]);
 
