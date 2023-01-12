@@ -75,7 +75,7 @@
                         <!--end::Label-->
                         <select class="form-control select2 select2-hidden-accessible  form-control-solid"  id="kt_select2_3" name="sections[]" multiple="" data-select2-id="kt_select2_3" tabindex="-1" aria-hidden="true" direction="rtl">
                             @foreach($sections as $section)
-                                <option selected value="{{$section->id}}">{{$section->title}}</option>
+                                <option  value="{{$section->id}}">{{$section->title}}-{{$section->category}}</option>
                             @endforeach
                         </select>
 

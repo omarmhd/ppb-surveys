@@ -3,7 +3,7 @@
     <script>
         toastr.success('{!!session('success')!!}', 'نجاح!', {
             closeButton: true,
-            positionClass: "toast-bottom-full-width",
+            positionClass: "toast-bottom-left",
         });
 
     </script>
