@@ -128,8 +128,8 @@
                         </label>
                         <select class="form-control form-control-solid"  name="status_show" >
 
-                                 <option value="private">خاص</option>
-                                 <option value="published">مرفوع</option>
+                                 <option {{$activated_survey->status_show=="private"?"selected":''}} value="private">خاص</option>
+                                 <option {{$activated_survey->status_show=="published"?"selected":''}} value="published">مرفوع</option>
 
                         </select>
                     </div>
@@ -142,8 +142,8 @@
                         </label>
                         <select class="form-control form-control-solid"  name="is_open" >
 
-                            <option value="0">مغلق</option>
-                            <option value="1">مفتوح</option>
+                            <option  {{$activated_survey->is_open==0?"selected":''}} value="0">مغلق</option>
+                            <option  {{$activated_survey->is_open==1?"selected":''}} value="1">مفتوح</option>
 
                         </select>
                     </div>
