@@ -1,5 +1,5 @@
 @extends('layouts.app_admin')
-@section('title','الإستبيانات')
+@section('title','النماذج')
 @section('toolbar.title','لوحة التحكم')
 @section('breadcrumb')
     <!--begin::Item-->
@@ -95,7 +95,7 @@
 @endsection
 
 @push('js')
-    <script src="{{asset('assets/css/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
 
     @include('surveys._datatable')
     @include("parts.sweetDelete", ['route' => route('surveys.destroy', ['survey' => ':id'])])
