@@ -46,6 +46,20 @@
 
                     </div>
 
+                    <div class="col-md-5 fv-row">
+                        <!--begin::Label-->
+                        <label class="d-flex align-items-center fs-6 fw-bold mb-2">
+                            <span class="required">فئة النموذج</span>
+                            <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
+                               title="فئة النموذج"></i>
+                        </label>
+                        <!--end::Label-->
+                        <input id="" type="text" class="form-control form-control-solid"
+                               placeholder="موظفين تحصيل"
+                               name="category"/>
+
+                    </div>
+
 
                 </div>
                 <hr>

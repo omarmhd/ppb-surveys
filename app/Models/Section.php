@@ -15,7 +15,7 @@ class Section extends Model
         'updated_at'=> 'date:Y-m-d',
 
     ];
-    public $fillable=["title"];
+    public $fillable=["title","category"];
 
 
     public   function questions(){

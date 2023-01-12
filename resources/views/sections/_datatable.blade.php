@@ -20,6 +20,7 @@
                 {data: 'DT_RowIndex',name:'DT_RowIndex'},
 
                 {data: 'title', name: 'title'},
+                {data: 'category', name: 'category'},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]

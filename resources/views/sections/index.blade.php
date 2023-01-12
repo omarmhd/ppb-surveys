@@ -72,6 +72,7 @@
 
                         <th class="min-w-20px text-center" >#</th>
                         <th class="min-w-150px text-center" >العنوان</th>
+                        <th class="min-w-20px text-center" >تصنيف</th>
                         <th class="min-w-125px text-center">تاريخ الإضافة</th>
                         <th class="min-w-15px text-center">الإجراءات</th>
                     </tr>

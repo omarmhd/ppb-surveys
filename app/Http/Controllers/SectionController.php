@@ -39,7 +39,8 @@ class SectionController extends Controller
     public  function  store(Request $request){
         $validator = Validator::make($request->all(), [
             'title'=>"required",
-            'question.*'=>"required"
+            'question.*'=>"required",
+            'category'=>'required'
 
         ],[
             'question.*.required'=>'يوجد حقول في قسم الأسئلة  فارغة'
@@ -48,7 +49,11 @@ class SectionController extends Controller
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
 
-        $section=Section::create($request->only('title'));
+
+
+
+        $section=Section::create($request->only(['title','category']));
+
 
         $questions = [];
         if ($request->question) {
@@ -80,7 +85,8 @@ class SectionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title'=>"required",
-            'question.*'=>"required"
+            'question.*'=>"required",
+            'category'=>'required'
 
         ],[
             'question.*.required'=>'يوجد حقول في قسم الأسئلة  فارغة'
@@ -89,7 +95,7 @@ class SectionController extends Controller
             return response()->json(['success' => false, 'message' => $validator->errors()->first()]);
         }
 
-        $section->update($request->only('title'));
+        $section->update(["title"=>$request->title,"category"=>$request->category]);
 
         $questions = [];
         if ($request->question) {
