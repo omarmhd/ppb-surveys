@@ -12,8 +12,7 @@
 @push('css')
 
 
-    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet"
-          type="text/css"/>
+    <link href="{{asset('assets/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 @endpush
 @section('content')
 
@@ -96,7 +95,7 @@
 @endsection
 
 @push('js')
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="{{asset('assets/css/jquery.dataTables.min.js')}}"></script>
 
     @include('surveys._datatable')
     @include("parts.sweetDelete", ['route' => route('surveys.destroy', ['survey' => ':id'])])

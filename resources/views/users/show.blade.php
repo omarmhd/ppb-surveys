@@ -7,7 +7,7 @@
         <span class="bullet bg-gray-400 w-5px h-2px"></span>
     </li>
 
-    <li class="breadcrumb-item text-muted">تقيماتيd</li>
+    <li class="breadcrumb-item text-muted">تقيماتي</li>
 @endsection
 @push('css')
     <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet"

@@ -29,7 +29,7 @@ License: For each use you must have a valid license purchased only from above li
                 <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
                     <!--begin::Logo-->
                     <a href="index.html" class="py-9">
-                        <img alt="Logo" src="https://ppb.ps/assets/site/images/logo.png" class="h-70px" />
+                        <img alt="Logo" src="{{asset("images/logo.png")}}" class="h-70px" />
                     </a>
                     <!--end::Logo-->
                     <!--begin::Title-->

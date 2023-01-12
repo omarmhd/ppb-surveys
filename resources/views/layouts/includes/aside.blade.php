@@ -2,8 +2,8 @@
     <!--begin::Brand-->
     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
         <!--begin::Logo-->
-        <a href="index.html">
-            <img alt="Logo" src="https://ppb.ps/assets/site/images/logo.png" class="h-40px logo" />
+        <a href="">
+            <img alt="Logo" src="{{asset("images/logo.png")}}" class="h-40px logo" />
         </a>
         <!--end::Logo-->
         <!--begin::Aside toggler-->

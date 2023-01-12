@@ -12,7 +12,7 @@
 @push('css')
 
 
-    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet"
+    <link href="{{asset('assets/css/jquery.dataTables.min.css')}}" rel="stylesheet"
           type="text/css"/>
 @endpush
 @section('content')
@@ -72,7 +72,7 @@
                         <th class="w-10  text-center"  style="width:10%">الإسم المستخدم</th>
                         <th class="w-10 text-center"  style="width:25%">الاسم رباعي</th>
                         <th class="w-10  text-center" style="width:15%">البريد الإلكتروني</th>
-                
+
                         <th class="w-10  text-center" style="width:10%">الدور</th>
                         <th class="min-w-100px text-center" style="width:10%">تاريخ الإضافة</th>
                         <th class="min-w-124px text-center" style="width:30%">الإجراءات</th>
@@ -97,7 +97,7 @@
 @endsection
 
 @push('js')
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
 
     @include('users._datatable')
     @include("parts.sweetDelete", ['route' => route('users.destroy', ['user' => ':id'])])
