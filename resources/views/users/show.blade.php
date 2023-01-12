@@ -7,7 +7,7 @@
         <span class="bullet bg-gray-400 w-5px h-2px"></span>
     </li>
 
-    <li class="breadcrumb-item text-muted">تقيماتي</li>
+    <li class="breadcrumb-item text-muted">تقيماتيd</li>
 @endsection
 @push('css')
     <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet"
@@ -333,7 +333,7 @@
                     var note=$(this).parent().parent().find('.note').val()
 
                     var  element=$(this)
-                    var url = "{{ route('status.update',['id'=>':id'])  }}";
+                    var url = "{{ route('status.update',['id'=>':id','type'=>'2'])  }}";
                     url = url.replace(':id', id)
 
                     $.ajax({

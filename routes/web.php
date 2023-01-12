@@ -15,6 +15,7 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
+Route::get("activated-surveys/tt/{type?}/{id}",[\App\Http\Controllers\ActivatedSurveyController::class,'updateStatus'])->name('status.update');
 
 route::group(['middleware'=>['auth','can:administrator']],function (){
 

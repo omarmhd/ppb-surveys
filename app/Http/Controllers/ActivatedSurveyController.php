@@ -796,8 +796,11 @@ class ActivatedSurveyController extends Controller
         if (!in_array($type, ['1', '2', '3', '4'])) {
             return back()->with("error", "خطأ في البيانات المدخلة");
         }
+
+       
         if ($type == '2' and $request->ajax()) {
-            $CurrantSurvey = CurrantSurvey::where(["id" => $id])->update(["status" => $type, 'note_employee' => $request->note]);
+        
+            $CurrantSurvey = CurrantSurvey::where(["id" => $id])->update(["status" => $type, 'employee_notes' => $request->note]);
             return response()->json(['success' => true]);
 
         }
