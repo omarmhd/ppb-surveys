@@ -86,8 +86,8 @@ class ActivatedSurveyController extends Controller
     }
 
     public function condtionBtn($data){
-        $display=$data->evaluator_id==auth()->user()->id?"none":"";
-        $actionBtn = '<a title="تقيم الموظف" style="display:"'.$display.'" title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '"  href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
+        $display=$data->evaluator_id==auth()->user()->id?"":"d-none";
+        $actionBtn = '<a title="تقيم الموظف" class="'.$display.'"  title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '"  href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
                       <a  title="تعديل البيانات" href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
                         <a title="تفاصيل التقيم " href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
                      <a  title="حذف التقيم " href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
@@ -97,7 +97,7 @@ class ActivatedSurveyController extends Controller
             $actionBtn = '<a title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '" class="edit btn btn-primary btn-sm"><i class="fa fa-poll"></i>  تقيم</a>';
             $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->latest()->get();
         }elseif (Gate::allows("hr")){
-            $display=$data->evaluator_id==auth()->user()->id?"none":"";
+            $display=$data->evaluator_id==auth()->user()->id?"":"none";
             $actionBtn = ' <a style="display:"'.$display.'" title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
 
                         <a title="تفاصيل التقيم"  href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
