@@ -137,7 +137,7 @@
 @endsection
 @push('js')
 
-    <script src="https://preview.keenthemes.com//metronic/theme/html/demo1/dist/assets/js/pages/crud/forms/widgets/select2.js?v=7.2.9"></script>
+    <script src="{{asset("assets/js/select2.js")}}"></script>
     <script>
         $(function () {
             $('#kt_select2_3, #kt_select2_12_2, #kt_select2_12_3, #kt_select2_12_4').select2({
