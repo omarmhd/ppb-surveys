@@ -204,7 +204,7 @@
 @endsection
 @push('js')
 
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{asset('assets/js/select2.min.js')}}"></script>
 
 
     @include("parts.sweetCreate", ['route' => route('activated-surveys.store'),'method'=>'post'])
