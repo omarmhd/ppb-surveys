@@ -40,6 +40,9 @@ route::group(['middleware'=>['auth','can:administrator']],function (){
     Route::get("activated-surveys/acceptedIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'acceptedIndex'])->name('activated-surveys.acceptedIndex');
     Route::get("activated-surveys/approvalIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'approvalIndex'])->name('activated-surveys.approvalIndex');
     Route::get("activated-surveys/returnIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'returnIndex'])->name('activated-surveys.returnIndex');
+    Route::get("activated-surveys/needApprovalIndex",[\App\Http\Controllers\ActivatedSurveyController::class,'needApprovalIndex'])->name('activated-surveys.needApprovalIndex');
+
+
 
     //:all activated survey
     Route::resource('activated-surveys',\App\Http\Controllers\ActivatedSurveyController::class);

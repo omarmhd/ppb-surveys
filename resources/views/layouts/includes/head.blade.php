@@ -23,15 +23,15 @@
 
 @stack('css')
 <style>
-@font-face {
-    font-family: 'Cairo-Regular';
-    font-style: normal;
-    src: url('assets/font/Cairo-Regular.ttf');
+    @font-face {
+        font-family: 'Cairo-Regular';
+        font-style: normal;
+        src: url('/assets/font/Cairo-Regular.ttf');
 
-}
+    }
 
-html, body{
+    html, body{
 
-    font-family: Cairo-Regular,"sans-serif" !important;
+        font-family: Cairo-Regular,"sans-serif" !important;
 
-}</style>
+    }</style>

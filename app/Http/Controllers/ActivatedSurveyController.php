@@ -24,9 +24,16 @@ class ActivatedSurveyController extends Controller
 
         if (Gate::allows("evaluator") ) {
             if(($date_from and $date_to) or $employee_id  or $evaluator_id) {
+                $data = CurrantSurvey::when($employee_id, function ($q) use ($employee_id) {
+                    return $q->where('employee_id', $employee_id);
+                })->when($evaluator_id, function ($q) use ($evaluator_id) {
+                    return $q->where('evaluator_id', $evaluator_id);
+                })->when($status, function ($q) use ($status) {
+                    return $q->where('status', $status);
+                })->when($date_from and $date_to, function ($q) use ($date_from,$date_to) {
+                    return $q->whereBetween('created_at', [$date_from, $date_to]);
+                })->latest()->get();
 
-
-                $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->where("status",$status)->whereBetween('created_at', [$date_from, $date_to])->latest()->get();
             }else{
                 if($status!=""){
                     $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->where("status", $status)->latest()->get();
@@ -42,10 +49,21 @@ class ActivatedSurveyController extends Controller
 
         } else {
 
-            if(($date_from and $date_to) or $employee_id  or $evaluator_id) {
+            if(($date_from!="" and $date_to!="") or $employee_id!=""  or $evaluator_id!="") {
 
-                $data = CurrantSurvey::whereBetween('created_at', [$date_from, $date_to])->orwhere('employee_id',$employee_id)->orwhere('evaluator_id',$evaluator_id)->orwhere("status",$status)->latest()->get();
+                $data = CurrantSurvey::when($employee_id, function ($q) use ($employee_id) {
+                    return $q->where('employee_id', $employee_id);
+                })->when($evaluator_id, function ($q) use ($evaluator_id) {
+                    return $q->where('evaluator_id', $evaluator_id);
+                })->when($status, function ($q) use ($status) {
+                    return $q->where('status', $status);
+                })->when($date_from and $date_to, function ($q) use ($date_from,$date_to) {
+                    return $q->whereBetween('created_at', [$date_from, $date_to]);
+                })->latest()->get();
+
+
             }else{
+
 
                 if($status!=""){
                     $data = CurrantSurvey::where('status',$status)->latest()->get();
@@ -372,6 +390,79 @@ class ActivatedSurveyController extends Controller
 
     }
 
+
+    public function needApprovalIndex(Request $request)
+    {
+        $evaluators = User::where("role", 'evaluator')->get();
+        $employees = User::where("role", 'employee')->get();
+
+        if ($request->ajax()) {
+            $data=$this->dataTableSearch($request->date_from,$request->date_to,$request->employee_id,$request->evaluator_id,"2");
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('status', function ($data) {
+                    if ($data->status == "private") {
+                        $actionBtn = '<i class="fa  fa-eye-slash"></i>';
+                    } else {
+                        $actionBtn = '<i class="fa fa-eye"></i>';
+
+                    }
+                    return $actionBtn;
+                })
+                ->addColumn('is_open', function ($data) {
+                    if ($data->is_open == 0) {
+                        $actionBtn = '<span style="background: #1a202c;color: white">مغلق</span>';
+                    } else {
+                        $actionBtn = '<span style="background: #50CD89;color: white">مفتوح</span>';
+
+                    }
+                    return $actionBtn;
+                })->addColumn('is_evaluated', function ($data) {
+                    if ($data->is_evaluated == 1) {
+                        $actionBtn = '<i class="fa fa-check"></i>';
+                    } else {
+                        $actionBtn = '<i class="fa fa-times"></i>';
+
+                    }
+                    return $actionBtn;
+                })->addColumn('action', function ($data) {
+                    $actionBtn = '<a href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
+                      <a href="' . route('activated-surveys.edit', $data) . '" data-id="' . $data->id . '"   class="btn  btn-icon   btn-light-primary  me-2 mb-2 py-3"><i class="fa fa-pen"></i></a>
+                        <a href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
+                     <a href="javascript:void(0)" data-id="' . $data->id . '"   class="delete btn btn-icon  btn-light-danger  me-2 mb-2 py-3"><i class="fa fa-trash"></i></a>
+
+                     ';
+                    return $actionBtn;
+                })
+                ->addColumn('employee_id', function ($data) {
+
+                    return $data->employee->full_name;
+
+                })
+                ->addColumn('survey_id', function ($data) {
+
+                    return $data->survey->title;
+
+                })
+                ->addColumn('evaluator_id', function ($data) {
+
+                    return $data->evaluator->full_name;
+
+                })
+                ->addColumn('score', function ($data) {
+                    $sum_result = $data->results->sum("score");
+                    $prerc = ($sum_result / 100) * 100;
+
+                    return $prerc;
+                })
+                ->rawColumns(['action', 'status', 'is_open', 'is_evaluated', 'employee_id', 'survey_id'])
+                ->make(true);
+        }
+
+        return view('surveys.activated-surveys.needApproval.index', compact('evaluators', 'employees'));
+
+    }
     public function approvalIndex(Request $request)
     {
         $evaluators = User::where("role", 'evaluator')->get();

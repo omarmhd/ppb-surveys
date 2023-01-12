@@ -39,7 +39,7 @@
                     <div class="col-md-6 fv-row">
                         <!--begin::Label-->
                         <label class="d-flex align-items-center fs-6 fw-bold mb-2">
-                            <span class="required"> الاستبيان</span>
+                            <span class="required"> النموذج</span>
                             <i class="fas fa-exclamation-circle ms-2 fs-7" data-bs-toggle="tooltip"
                                title=""></i>
                         </label>
