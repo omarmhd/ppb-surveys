@@ -72,7 +72,7 @@
                 </table>
                 <!--end::Table-->
             </div>
-            @if($survey->status!=='3')
+            @if($survey->status=='2')
 
             <div class="text-center mt-20 ms-20 mb-20">
                 <button type="submit" id="btn_approval" class="btn btn-primary" >
