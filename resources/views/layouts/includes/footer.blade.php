@@ -34,7 +34,7 @@
 
 <script src="{{asset('assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{asset('assets/js/scripts.bundle.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{asset('assets/js/toastr.min.js')}}"></script>
 {{--<script src="https://npmcdn.com/flatpickr/dist/l10n/ar.js"></script>--}}
 
 {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/localization/messages_ar.min.js"></script>--}}
