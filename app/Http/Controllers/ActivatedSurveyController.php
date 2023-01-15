@@ -98,7 +98,8 @@ class ActivatedSurveyController extends Controller
             $data = CurrantSurvey::where(['evaluator_id' => auth()->user()->id])->latest()->get();
         }elseif (Gate::allows("hr")){
             $display=$data->evaluator_id==auth()->user()->id?"":"none";
-            $actionBtn = ' <a style="display:"'.$display.'" title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
+
+            $actionBtn = ' <a style="display:'.$display.'" title="تقيم الموظف" href="' . route('activated-surveys.show', $data) . '" class="edit btn  btn-icon btn-light-dark me-2 mb-2 py-3"><i class="fa fa-poll"></i>  </a>
 
                         <a title="تفاصيل التقيم"  href="' . route("approval.show", $data->id) . '" data-id="' . $data->id . '"   class="btn btn btn-icon  btn-light-info  me-2 mb-2 py-3"><i class="fa fa-ellipsis-h"></i></a>
 
@@ -111,7 +112,7 @@ class ActivatedSurveyController extends Controller
 
     public function index(Request $request)
     {
-
+        abort_if(Gate::none(['administrator','hr','evaluator','query']), 403);
 
         $evaluators = User::where("role", 'evaluator')->get();
         $employees = User::where("role", 'employee')->get();
@@ -162,6 +163,7 @@ class ActivatedSurveyController extends Controller
 
     public function newIndex(Request $request)
     {
+        abort_if(Gate::none(['administrator','hr','evaluator','query']), 403);
 
 
         $evaluators = User::where("role", 'evaluator')->get();
@@ -236,6 +238,7 @@ class ActivatedSurveyController extends Controller
 
     public function acceptedIndex(Request $request)
     {
+        abort_if(Gate::none(['administrator','hr','evaluator','query']), 403);
 
 
         $evaluators = User::where("role", 'evaluator')->get();
@@ -308,6 +311,7 @@ class ActivatedSurveyController extends Controller
     public function evaluatedIndex(Request $request)
     {
 
+        abort_if(Gate::none(['administrator','hr','evaluator','query']), 403);
 
         $evaluators = User::where("role", 'evaluator')->get();
         $employees = User::where("role", 'employee')->get();
@@ -380,6 +384,8 @@ class ActivatedSurveyController extends Controller
 
     public function needApprovalIndex(Request $request)
     {
+        abort_if(Gate::none(['administrator','hr','evaluator','query']), 403);
+
         $evaluators = User::where("role", 'evaluator')->get();
         $employees = User::where("role", 'employee')->get();
 
@@ -446,6 +452,8 @@ class ActivatedSurveyController extends Controller
     }
     public function approvalIndex(Request $request)
     {
+        abort_if(Gate::none(['administrator','hr','evaluator','query']), 403);
+
         $evaluators = User::where("role", 'evaluator')->get();
         $employees = User::where("role", 'employee')->get();
 
@@ -513,6 +521,7 @@ class ActivatedSurveyController extends Controller
 
     public function returnIndex(Request $request)
     {
+        abort_if(Gate::none(['administrator','hr','evaluator','query']), 403);
 
         $evaluators = User::where("role", 'evaluator')->get();
         $employees = User::where("role", 'employee')->get();
@@ -584,6 +593,7 @@ class ActivatedSurveyController extends Controller
     public function indexApprovalPage($id)
     {
 
+        abort_if(Gate::none(['administrator','hr']), 403);
 
         $survey = CurrantSurvey::findorfail($id);
 
@@ -604,10 +614,15 @@ class ActivatedSurveyController extends Controller
 
     public function show($id)
     {
-        $survey = CurrantSurvey::findorfail($id);
 
+
+
+        $survey = CurrantSurvey::findorfail($id);
+        if (auth()->user()->id!==$survey->evaluator_id){
+            return redirect()->back()->with('info', 'ليس لديك صلاحية التقيم ');
+        }
         if ($survey->is_evaluated == 1) {
-            return redirect()->back()->with('error', 'نأسف! لا يمكن التقيم مرة أخرى ');
+            return redirect()->back()->with('info', 'نأسف! لا يمكن التقيم مرة أخرى ');
         }
         $survey_id = $survey->survey_id;
         $sections = SectionSurvey::with(['results' => function ($q) use ($id) {
@@ -685,6 +700,10 @@ class ActivatedSurveyController extends Controller
 
         }
 
+
+
+
+
         return response()->json(['success' => true, 'message' => "تم  تفعيل  النموذج"]);
 
 
@@ -725,12 +744,18 @@ class ActivatedSurveyController extends Controller
 
     public function evaluation(Request $request, CurrantSurvey $activated_survey)
     {
+        abort_if(Gate::none(['administrator','hr','evaluator']), 403);
+
+
+        if (auth()->user()->id!==$activated_survey->evaluator_id){
+            return response()->json(['success' => false, 'message' => "غير مسموح التقيم"]);
+        }
 
 
         $cont_results = count($request->results ?? [""]);
 
         if ($activated_survey->status == "1" or $activated_survey->status=="3" or $activated_survey->status=="2" ) {
-            return response()->json(['success' => "error", 'message' => "نأسف!تم التقبم مسبقا لا يمكن التقيم مرة أخرى"]);
+            return response()->json(['success' => "error", 'message' => "تم التقبم مسبقا لا يمكن التقيم مرة أخرى"]);
         }
 
         if ($cont_results !== $activated_survey->results->count() || $cont_results == 0) {
@@ -777,6 +802,7 @@ class ActivatedSurveyController extends Controller
 
     public function destroy(CurrantSurvey $activated_survey)
     {
+        abort_if(Gate::none(['administrator']), 403);
         $activated_survey->delete();
         return response()->json(['status' => 'success']);
     }

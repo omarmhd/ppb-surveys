@@ -76,8 +76,11 @@
             <option  disabled selected>اختيار</option>
             <option {{old('role',$user->role=="employee"?"selected":"") }}  value="employee">موظف</option>
             <option {{old('role',$user->role=="evaluator"?"selected":"") }} value="evaluator">مقيم</option>
+            @can("administrator")
             <option {{old('role',$user->role=="administrator"?"selected":"") }} value="administrator">مسؤول النظام</option>
+            @endcan
             <option {{old('role',$user->role=="hr"?"selected":"") }} value="hr">   HR</option>
+            <option {{old('role',$user->role=="query"?"selected":"") }} value="query">   موظف استعلام</option>
         </select>
 
 

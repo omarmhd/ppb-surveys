@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -15,6 +16,8 @@ class SectionController extends Controller
 
     public function index(Request  $request)
     {
+        abort_if(Gate::none(['administrator','hr']), 403);
+
         if ($request->ajax()) {
             $data = Section::latest()->get();
             return DataTables::of($data)
@@ -37,6 +40,8 @@ class SectionController extends Controller
     }
 
     public  function  store(Request $request){
+        abort_if(Gate::none(['administrator','hr']), 403);
+
         $validator = Validator::make($request->all(), [
             'title'=>"required",
             'question.*'=>"required",
@@ -78,11 +83,15 @@ class SectionController extends Controller
 
     public function edit(Section $section)
     {
+        abort_if(Gate::none(['administrator','hr']), 403);
+
         return view("sections.edit",compact('section'));
     }
 
     public function update(Request $request, Section $section )
     {
+        abort_if(Gate::none(['administrator','hr']), 403);
+
         $validator = Validator::make($request->all(), [
             'title'=>"required",
             'question.*'=>"required",
@@ -122,6 +131,8 @@ class SectionController extends Controller
 
 
     public function  destroy(Section $section){
+        abort_if(Gate::none(['administrator']), 403);
+
         $section->delete();
         return response()->json(['status' => 'success']);
     }

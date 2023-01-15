@@ -16,15 +16,18 @@ class canAny
      */
     public function handle(Request $request, Closure $next, ...$permissions)
     {
+
         if (!$request->user()) {
             abort(403);
         }
 
 
 
-        if (!sizeof($permissions)) {
+        if (!sizeof($permissions)|| in_array(auth()->user()->role,$permissions)) {
             abort(403);
         }
+
+
 
         return $next($request);
 

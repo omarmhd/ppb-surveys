@@ -8,6 +8,7 @@ use App\Models\Section;
 use App\Models\SectionSurvey;
 use App\Models\Survey;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -15,6 +16,9 @@ class SurveyController extends Controller
 {
     public function index(Request  $request)
     {
+        abort_if(Gate::none(['administrator','hr']), 403);
+
+
         if ($request->ajax()) {
             $data = Survey::latest()->get();
             return DataTables::of($data)
@@ -45,7 +49,7 @@ class SurveyController extends Controller
     }
 
     public  function  store(Request $request){
-
+        abort_if(Gate::none(['administrator','hr']), 403);
 
         $validator = Validator::make($request->all(), [
             'title'=>"required",
@@ -87,6 +91,7 @@ class SurveyController extends Controller
 
 
     public function show(Survey $survey){
+        abort_if(Gate::none(['administrator','hr']), 403);
         $points=Point::all();
 
 
@@ -97,12 +102,14 @@ class SurveyController extends Controller
 
     public function edit(Survey $survey)
     {
+        abort_if(Gate::none(['administrator','hr']), 403);
         $sections=Section::all();
         return view("surveys.edit",compact('survey','sections'));
     }
 
     public function update(Request $request, Survey $survey)
     {
+        abort_if(Gate::none(['administrator','hr']), 403);
         $validator = Validator::make($request->all(), [
             'title'=>"required",
             'sections.*'=>"required"
@@ -141,6 +148,7 @@ class SurveyController extends Controller
     }
 
     public function  destroy(Survey $survey){
+        abort_if(Gate::none(['administrator']), 403);
         $currant=CurrantSurvey::firstWhere('survey_id',$survey->id)->exists();
 
         if(!$currant){

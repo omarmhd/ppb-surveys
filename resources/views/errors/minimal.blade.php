@@ -11,7 +11,7 @@
     <link href="{{asset('css/custom.css')}}" rel="stylesheet" type="text/css"/>
 </head>
 <!--begin::Body-->
-<body id="kt_body" style="background-color: #CE3538">
+<body id="kt_body" style="background-color: #000000">
 <!--begin::Main-->
 <div class="d-flex flex-column flex-root">
     <!--begin::Authentication - Error 404 -->

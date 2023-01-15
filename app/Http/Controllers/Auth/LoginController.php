@@ -37,6 +37,15 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    protected function redirectPath()
+    {
+
+        if (auth()->user()->role == 'employee') {
+
+            return "".route("showMyEvaluation")."";
+        }
+        return  "".route('dashboard')."";
+    }
     public function username()
     {
         return 'name';

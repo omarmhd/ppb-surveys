@@ -9,6 +9,7 @@ use App\Models\Result;
 use App\Models\User;
 use http\Encoding\Stream\Enbrotli;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -17,6 +18,10 @@ class UserController extends Controller
 {
     public function index(Request  $request)
     {
+        abort_if(Gate::none(['administrator','hr']), 403);
+
+
+
         if ($request->ajax()) {
             $data = User::latest()->get();
             return DataTables::of($data)
@@ -38,6 +43,7 @@ class UserController extends Controller
 
 
     public  function create(){
+        abort_if(Gate::none(['administrator','hr']), 403);
 
         $user =new User();
         return view("users.create",compact('user'));
@@ -45,12 +51,13 @@ class UserController extends Controller
 
     public  function  store(Request $request){
 
+        abort_if(Gate::none(['administrator','hr']), 403);
 
         $validator = Validator::make($request->all(), [
             'name'=>"required|unique:users,name",
             'full_name'=>'required',
             'email'=>"required|unique:users,email",
-            'role'=>'required|in:employee,evaluator,administrator,hr',
+            'role'=>'required|in:employee,evaluator,administrator,hr,query',
             'password'=>'required|min:4'
         ]);
 
@@ -72,6 +79,7 @@ class UserController extends Controller
 
 
     public function  show($id){
+
 
 
         $surveysCurrantBefor=CurrantSurvey::with('survey')->where('employee_id',$id)->whereIN('status',['1','2','3','4','5'])->where('status_show','published')->where('is_open',"1");
@@ -99,7 +107,7 @@ class UserController extends Controller
             return view("users.show",compact('surveyLatest','user','surveys','avgScore'));
         }
 
-        return redirect()->back()->with('error',"لا يوجد تقيمات لهذا الحساب في الوقت الحالي ");
+        return redirect()->back()->with('info',"لا يوجد تقيمات لهذا الحساب. ");
     }
 
     public function showMyEvaluation(){
@@ -107,7 +115,7 @@ class UserController extends Controller
         $id=auth()->user()->id;
         $surveysCurrantBefor=CurrantSurvey::with('survey')->where('employee_id',$id)->whereIN('status',['1','2','3','4','5'])->where('status_show','published')->where('is_open',"1");
 
-        if( $surveysCurrantBefor->count()>0){
+
 
             $surveyLatest=$surveysCurrantBefor->latest()->first();
 
@@ -123,25 +131,26 @@ class UserController extends Controller
 
             $user=User::findOrFail($id);
             return view("users.show",compact('surveyLatest','user','surveys','avgScore'));
-        }
 
 
-        return redirect()->back()->with('error',"لا يوجد تقيمات لهذا الحساب في الوقت الحالي ");
+
+
     }
 
 
 
     public  function edit(User $user){
+        abort_if(Gate::none(['administrator']), 403);
         return view("users.edit",compact('user'));
     }
 
     public  function  update(Request $request,User $user){
-
+        abort_if(Gate::none(['administrator']), 403);
         $validator = Validator::make($request->all(), [
             'name'=>"required|unique:users,name,".$user->id,
             'full_name'=>'required',
             'email'=>"required|unique:users,email,".$user->id,
-            'role'=>'required|in:employee,evaluator,administrator,hr',
+            'role'=>'required|in:employee,evaluator,administrator,hr,query',
 
         ]);
 
@@ -166,6 +175,7 @@ class UserController extends Controller
 
     }
     public function  destroy(User $user){
+        abort_if(Gate::none(['administrator']), 403);
         $user->delete();
         return response()->json(['status' => 'success']);
     }
