@@ -3,7 +3,6 @@
 <head>
     <title>{{config('app.name')}} | @yield('title')</title>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="{{asset('assets/plugins/global/plugins.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('assets/css/style.bundle.rtl.css')}}" rel="stylesheet" type="text/css"/>
@@ -11,7 +10,7 @@
     <link href="{{asset('css/custom.css')}}" rel="stylesheet" type="text/css"/>
 </head>
 <!--begin::Body-->
-<body id="kt_body" style="background-color: #000000">
+<body id="kt_body" style="background-color: #ffffff">
 <!--begin::Main-->
 <div class="d-flex flex-column flex-root">
     <!--begin::Authentication - Error 404 -->
@@ -22,7 +21,7 @@
         <div class="d-flex flex-column flex-column-fluid text-center p-10 py-lg-20">
             <!--begin::Logo-->
             <a href="{{config('app.url')}}" class="mb-10 pt-lg-20">
-                <img alt="Logo" src="https://ppb.ps/assets/site/images/logo.png" class="h-50px mb-5"/>
+                <img alt="Logo" src="{{asset('images/logo.png')}}" class="h-50px mb-5"/>
             </a>
             <!--end::Logo-->
             <!--begin::Wrapper-->
@@ -50,7 +49,7 @@
                 <li class="breadcrumb-item text-muted">
                     <a href="{{config('app.url')}}"
                        class="text-muted text-hover-primary px-2 breadcrumb-item ">
-                        {{config('app.name')}}
+                     بنك الانتاج
                     </a>
                 </li>
                 <!--end::Item-->

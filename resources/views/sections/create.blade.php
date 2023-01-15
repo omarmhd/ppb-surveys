@@ -55,7 +55,7 @@
                         </label>
                         <!--end::Label-->
                         <input id="" type="text" class="form-control form-control-solid"
-                               placeholder="موظفين تحصيل"
+                               placeholder="مثال : موظفين تحصيل"
                                name="category"/>
 
                     </div>
