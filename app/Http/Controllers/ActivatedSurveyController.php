@@ -105,6 +105,8 @@ class ActivatedSurveyController extends Controller
 
 
                      ';
+        }elseif (Gate::allows("query")){
+            $actionBtn='';
         }
 
         return $actionBtn;
