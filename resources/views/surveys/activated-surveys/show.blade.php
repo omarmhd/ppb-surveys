@@ -8,7 +8,7 @@
 
     <!--begin::Form Widget 13-->
     <div class="card">
-        <h3 class="text-center py-2">{{$survey->survey->title}}  ({{$survey->survey->details}} )</h3>
+        <h3 class="text-center py-2">{{$survey->survey->title}}  ({{$survey->survey->description}} )</h3>
         <!--begin::Body-->
         <div class="card-body py-1">
             <!--begin:Form-->
@@ -97,11 +97,22 @@
                                <td>{{$key+1}} </td>
                                 <td>{{$result->question_title}} </td>
 
-                               @foreach($points as $point)
+                               @if($survey->status='1' ||$survey->status='3')
+                                         @foreach($points as $point)
 
-                                    <td><input type="radio" class="form-check-input radio-sm calc"  name="results[{{$result->id}}]" value="{{$point->score}}"></td>
+                                             <td><input type="radio" class="form-check-input radio-sm calc"  {{$point->score==$result->score?"checked":""}}  name="results[{{$result->id}}]" value="{{$point->score}}"></td>
 
-                                @endforeach
+                                         @endforeach
+
+                                     @else
+                                     @foreach($points as $point)
+
+                                         <td><input type="radio" class="form-check-input radio-sm calc"  name="results[{{$result->id}}]" value="{{$point->score}}"></td>
+
+                                     @endforeach
+                                   @endif
+
+
                                  </tr>
 
 
