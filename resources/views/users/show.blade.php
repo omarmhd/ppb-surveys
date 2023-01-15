@@ -274,7 +274,7 @@
 
 
                                         <div class="symbol symbol-35px symbol-circle" data-bs-toggle="tooltip" title="" data-bs-original-title="{{$survey->evaluator->full_name}}">
-                                            <img alt="Pic" src="https://cdn2.iconfinder.com/data/icons/flat-style-svg-icons-part-1/512/man_user_male_human_people-512.png">
+                                            <img alt="Pic" src="{{asset('images/avatar.png')}}">
                                         </div>
 
                                         @if($survey->status=="1" )
